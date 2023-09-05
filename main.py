@@ -59,7 +59,7 @@ def proxy(url):
         
     except:
         print(f'Redirecting')
-        return redirect("/?new=true")
+        return redirect(url_for('index', new='true'))
 
 
 @app.route('/')
