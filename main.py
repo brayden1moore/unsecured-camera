@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, send_file, stream_with_context, request, session, redirect, url_fo
+from flask import Flask, Response, render_template, send_file, stream_with_context, request, session, redirect, url_for
 import requests
 import random
 import pickle as pkl
