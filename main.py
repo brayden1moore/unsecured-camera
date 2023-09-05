@@ -75,7 +75,7 @@ def index():
                                country=country, 
                                time=time, 
                                ip=ip, 
-                               ip_link=ip_link
+                               ip_link=ip_link,
                                org=org, 
                                loc=loc, 
                                loc_link=loc_link, 
