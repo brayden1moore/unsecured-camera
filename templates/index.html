@@ -50,18 +50,22 @@
             width: 80vw;
         }
 
-        .feed {
-            padding: 1%;
-            border-style: solid;
-            border-width: 1px;
-            border-color: yellow;
-            margin-right: 3%;
-            width: 100%; 
-            object-fit: contain; 
+        .feed-wrapper, .info {
+          flex: 1;
         }
-
-        .feed, .info {
-            flex: 1;  
+        
+        .feed-wrapper {
+          padding-top: 75%;  /* aspect ratio 4:3 */
+          position: relative;
+        }
+        
+        .feed {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
       
         .map-div {
@@ -80,14 +84,14 @@
         }
 
         @media only screen and (max-width: 768px) {
-            .flex-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .feed, .info {
-                width: 90%;  /* full width for mobile */
-                flex: none;  /* reset flex for mobile */
-            }
+          .flex-container {
+            flex-direction: column;
+            align-items: center;
+          }
+          .feed-wrapper, .info {
+            width: 90%;  /* full width for mobile */
+            flex: none;  /* reset flex for mobile */
+          }
         }
 
     </style>
@@ -97,7 +101,10 @@
     <div class="outer-container">
         <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> a random unsecured camera</h1>
                 <div class="flex-container">
-                    <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" />
+                    <div class="feed-wrapper">
+                        <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" />
+                    </div>
+
                     <div class="info" style="display: flex; flex-direction: column; align-items: flex-start;">
 
                         <div class="map-div" style="position: relative; width: 500px; height: 300px; margin-bottom: 3%;">
