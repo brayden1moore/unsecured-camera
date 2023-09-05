@@ -36,6 +36,7 @@ def proxy(url):
             req = requests.get(f'http://{url}', stream=True, timeout=5)
             return Response(req.iter_content(chunk_size=10*1024), content_type=req.headers['content-type'])
         except requests.exceptions.RequestException as e:
+            print('retrying...')
             retries -= 1
     return send_file('static/error.png', mimetype='image/png')
 
@@ -51,7 +52,6 @@ def index():
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
     loc = info['loc']
-    print(info)
     X, Y = latlon_to_pixel(info['loc'])
     proxy_url = 'proxy/' + url.split('http://')[-1] 
     return render_template('index.html', name=name, url=proxy_url, info=info, country=country, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
