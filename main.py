@@ -74,7 +74,7 @@ def index():
         session['current_feed'] = feed
         
     #url = feed_dict[feed]['url']
-    url = live_urls[feed].replace('COUNTER',str(random.ranint(0,1000000)))
+    url = live_urls[feed].replace('COUNTER',str(random.randint(0,1000000)))
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_ip_info(ip)
     country = (pycountry.countries.get(alpha_2=info['country']).name).lower()
