@@ -29,11 +29,15 @@ def latlon_to_pixel(loc):
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
-    try:
-        req = requests.get(f'http://{url}', stream=True, timeout=10)
-        return Response(req.iter_content(chunk_size=10*1024), content_type=req.headers['content-type'])
-    except requests.exceptions.RequestException as e:
-        return send_file('static/error.png', mimetype='image/png')
+    retries = 3
+    while retries > 0:
+        try:
+            req = requests.get(f'http://{url}', stream=True, timeout=10)
+            return Response(req.iter_content(chunk_size=10*1024), content_type=req.headers['content-type'])
+        except requests.exceptions.RequestException as e:
+            retries -= 1
+            time.sleep(1)
+    return send_file('static/error.png', mimetype='image/png')
 
 @app.route('/')
 def index():
