@@ -49,7 +49,10 @@ def proxy(url):
         clean_url = url.replace('proxy/', '')
         print('Cleaned URL:', clean_url)
         
-        req = requests.get(f'{clean_url}', headers=headers, stream=True)
+        #req = requests.get(f'{clean_url}', headers=headers, stream=True)
+        req = requests.get(f'{clean_url}', headers=headers)
+        print("Status Code:", req.status_code)
+        print("Response Headers:", req.headers)
         
         content_type = req.headers['content-type']
         
@@ -58,6 +61,9 @@ def proxy(url):
     except requests.exceptions.RequestException as e:
         print(f'MY Error: {e}')
         return send_file('static/error.png', mimetype='image/png')
+
+    except Exception as e:
+        print(f"General Error: {e}")
 
 
 @app.route('/')
