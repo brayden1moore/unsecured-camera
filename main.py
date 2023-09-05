@@ -32,7 +32,7 @@ def proxy(url):
     retries = 3
     while retries > 0:
         try:
-            req = requests.get(f'http://{url}', stream=True)
+            req = requests.get(f'http://{url}', stream=True, timeout=5)
             return Response(req.iter_content(chunk_size=10*1024), content_type=req.headers['content-type'])
         except requests.exceptions.RequestException as e:
             retries -= 1
