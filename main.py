@@ -41,7 +41,8 @@ def index():
     url = feed_dict[feed]['url']
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_ip_info(ip)
-    name = (info['city'] + ", " + info['region'] + ", " + pycountry.countries.get(alpha_2=info['country']).name).lower()
+    country = (pycountry.countries.get(alpha_2=info['country']).name).lower()
+    name = (info['city'] + ", " + info['region'] + ", " + country).lower()
     org = info['org'].lower()
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
@@ -49,7 +50,7 @@ def index():
     print(info)
     X, Y = latlon_to_pixel(info['loc'])
     proxy_url = 'proxy/' + url.split('http://')[-1] 
-    return render_template('index.html', name=name, url=proxy_url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
+    return render_template('index.html', name=name, url=proxy_url, info=info, country=country, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860', debug=True)
