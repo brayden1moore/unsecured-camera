@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, send_file
+from flask import Flask, Response, render_template, send_file, stream_with_context
 import requests
 import random
 import pickle as pkl
@@ -6,10 +6,10 @@ import pycountry
 import datetime as dt
 import pytz
 
+app = Flask(__name__)
+
 with open('video_dict.pkl', 'rb') as f:
     feed_dict = pkl.load(f)
-
-app = Flask(__name__)
 
 def get_ip_info(ip_address):
     try:
@@ -27,6 +27,14 @@ def latlon_to_pixel(loc):
     x = ((longitude+180)/360)
     return x*100, y*100
 
+@app.route('/proxy/<path:url>')
+def proxy(url):
+    req = requests.get('http://' + url, stream=True)
+    def generate():
+        for chunk in req.iter_content(chunk_size=1024):
+            yield chunk
+    return Response(generate(), content_type=req.headers['content-type'])
+
 @app.route('/')
 def index():
     feed = random.randint(0, len(feed_dict) - 1)
@@ -40,8 +48,8 @@ def index():
     loc = info['loc']
     print(info)
     X, Y = latlon_to_pixel(info['loc'])
-    print(url)
-    return render_template('index.html', name=name, url=url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
+    proxy_url = 'proxy/' + url.split('http://')[-1] 
+    return render_template('index.html', name=name, url=proxy_url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860', debug=True)
