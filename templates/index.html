@@ -124,7 +124,9 @@
         <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;"> a random unsecured camera in</p>
         <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> {{ country }}</h1>
                 <div class="flex-container">
-                    <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}"  />
+                    <a href="?new=false" id="refreshSameFeedButton" style="display: inline-block;">
+                      <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" />
+                    </a>
                     <div class="info">
 
                         <h3 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h3>
