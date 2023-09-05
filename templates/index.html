@@ -158,11 +158,11 @@
             }); 
             });
 
-       document.getElementById("refreshButton").addEventListener("click", function() {
+        document.getElementById("refreshButton").addEventListener("click", function() {
           const feed = document.getElementById("feed");
           const currentSrc = feed.src;
-          feed.src = ""; // Clear current src
-          setTimeout(() => { feed.src = currentSrc; }, 100); // Reset src after a short delay
+          const timestamp = new Date().getTime();  // Generate a unique timestamp
+          feed.src = `${currentSrc.split('?')[0]}?t=${timestamp}`;  // Append timestamp to the URL
         });
     </script>
 </body>
