@@ -49,7 +49,7 @@ def proxy(url):
         clean_url = url.replace('proxy/', '')
         print('Cleaned URL:', clean_url)
         
-        req = requests.get(f'http://{clean_url}', headers=headers, stream=True)
+        req = requests.get(f'{clean_url}', headers=headers, stream=True)
         
         content_type = req.headers['content-type']
         
@@ -79,7 +79,7 @@ def index():
     time = dt.datetime.now(timezone)
     loc = info['loc']
     X, Y = latlon_to_pixel(info['loc'])
-    proxy_url = 'proxy/' + url.split('http://')[-1] 
+    proxy_url = 'proxy/' + url
     
     loc_link = f"https://www.google.com/maps/search/{loc}"
     ip_link = url
