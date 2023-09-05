@@ -47,7 +47,7 @@ def proxy(url):
 
 @app.route('/')
 def index():
-    feed = random.randint(0, len(feed_dict) - 1)
+    feed = random.randint(0, len(live_urls) - 1)
     #url = feed_dict[feed]['url']
     url = live_urls[feed]
     ip = ''.join(url.split('//')[-1]).split(':')[0]
