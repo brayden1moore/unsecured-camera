@@ -35,10 +35,14 @@ from urllib.parse import urlparse, parse_qs
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
-    print('URL:', url)
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
-        req = requests.get(f'http://{url}', headers=headers, stream=True, timeout=15)
+        # Remove 'proxy/' from the url if present
+        clean_url = url.replace('proxy/', '')
+        
+        print('Cleaned URL:', clean_url)  # For debugging
+        
+        req = requests.get(f'http://{clean_url}', headers=headers, stream=True, timeout=15)
         content_type = req.headers['content-type']
         
         return Response(req.iter_content(chunk_size=10*1024), content_type=content_type)
@@ -46,6 +50,7 @@ def proxy(url):
     except requests.exceptions.RequestException as e:
         print(f'MY Error: {e}')
         return send_file('static/error.png', mimetype='image/png')
+
 
 @app.route('/')
 def index():
