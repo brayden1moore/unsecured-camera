@@ -52,6 +52,7 @@ def index():
     else:
         feed = random.randint(0, len(live_urls) - 1)
         session['current_feed'] = feed
+        
     #url = feed_dict[feed]['url']
     url = live_urls[feed]
     ip = ''.join(url.split('//')[-1]).split(':')[0]
