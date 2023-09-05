@@ -100,12 +100,11 @@
                     <div style="display: flex; flex-direction: column; align-items: flex-start;">
 
                         <div class="map-div">
-                            <div style="position: relative;">
-                                <img id="map" src="{{ url_for('static', filename='map.png') }}" />
-                                <div class="dot" style="left: {{ X }}%; top: {{ Y }}%;"></div>
-                                <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
-                            </div>
+                            <img id="map" src="{{ url_for('static', filename='map.png') }}" />
+                            <div class="dot" style="left: {{ X }}%; top: {{ Y }}%;"></div>
+                            <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
                         </div>
+                      
                         <h2 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h2>
                         <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ loc }} <br><br> {{ ip }} <br><br> {{ org }} <br><br> {{ time }}</p>
 
