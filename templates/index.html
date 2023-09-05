@@ -61,14 +61,12 @@
         }
 
         .map-div {
-            padding: 1%;
-            border-style: solid;
-            border-width: 1px;
-            border-color: yellow;
-            position: relative; 
-            width: 40%; 
-            height: 300px; 
+            border: 1px solid yellow;
+            position: relative;
+            width: 40%;
+            height: 300px;
             margin-bottom: 3%;
+            box-sizing: border-box;
         }
 
         .map {
@@ -101,7 +99,7 @@
                     <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}"  />
 
                         <div class="map-div">
-                            <img id="map" src="{{ url_for('static', filename='map.png') }}" />
+                            <img id="map" src="{{ url_for('static', filename='map.png') }}" style="width: 100%; height: 100%;" />
                             <div class="dot" style="left: {{ X }}%; top: {{ Y }}%;"></div>
                             <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
                         </div>
