@@ -29,7 +29,7 @@ def latlon_to_pixel(loc):
 
 @app.route('/video/<path:url>')
 def video(url):
-    req = request.get('https://' + url, timeout=10)
+    req = requests.get('https://' + url, timeout=10)
 
     def generate():
         for chunk in req.iter_content(chunk_size=1024):
