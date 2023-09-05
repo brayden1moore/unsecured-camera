@@ -177,46 +177,19 @@
         //   });
 
 
-     document.addEventListener("DOMContentLoaded", function() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', "{{ url }}", true);
-        xhr.setRequestHeader('Cache-Control', 'no-cache');
-        xhr.responseType = 'arraybuffer';
-      
-        var image = document.getElementById("feed");
-        image.src = "{{ url_for('static', filename='loading.gif') }}"; // Display loading image initially
-      
-        var boundary = "--MOBOTIX_Fast_Serverpush"; // Update based on the server's Content-Type header
-      
-        var buffer = new ArrayBuffer(0);
-      
-        xhr.onprogress = function(e) {
-          var arrayBuffer = new Uint8Array(buffer.byteLength + e.loaded);
-          arrayBuffer.set(new Uint8Array(buffer), 0);
-          arrayBuffer.set(new Uint8Array(xhr.response), buffer.byteLength);
-      
-          // Parse buffer to find the boundary and extract JPEG images
-          while (true) {
-            var start = arrayBuffer.indexOf(boundary);
-            var end = arrayBuffer.indexOf(boundary, start + boundary.length);
-      
-            if (start === -1 || end === -1) {
-              break;
-            }
-      
-            var blob = new Blob([arrayBuffer.slice(start + boundary.length, end)], { type: "image/jpeg" });
-            var urlCreator = window.URL || window.webkitURL;
-            var imageUrl = urlCreator.createObjectURL(blob);
-            image.src = imageUrl;
-      
-            arrayBuffer = arrayBuffer.slice(end);
-          }
-      
-          buffer = arrayBuffer;
-        };
-      
-        xhr.send();
-});
+      document.addEventListener("DOMContentLoaded", function() {
+          const feed = document.getElementById("feed");
+          feed.src = "{{ url_for('static', filename='loading.gif') }}";
+          
+          const newUrl = "{{ url }}";
+          
+          const img = new Image();
+          img.onload = function() {
+              feed.src = this.src;
+          };
+          img.src = newUrl;
+      });
+
     </script>
 </body>
 
