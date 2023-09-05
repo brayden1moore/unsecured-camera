@@ -113,7 +113,7 @@
 
 <body style="background-color: black;">
     <div class="outer-container">
-        <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> a random unsecured camera</h1>
+        <h2 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> a random unsecured camera</h2>
                 <div class="flex-container">
                     <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}"  />
                     <div class="info">
@@ -123,7 +123,7 @@
                             <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
                         </div>
                       
-                        <h2 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h2>
+                        <h3 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h3>
                         <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ loc }} <br><br> {{ ip }} <br><br> {{ org }} <br><br> {{ time }}</p>
 
                         <a href="." style="margin-top: 3%; display: inline-block;">
