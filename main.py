@@ -33,8 +33,7 @@ def latlon_to_pixel(loc):
 @app.route('/proxy/<path:url>')
 def proxy(url):
 
-    timestamp = request.args.get('t', None)  # New line
-    print('URL:', url, 'Timestamp:', timestamp)  # Updated line
+    print('URL:', url) 
     
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
