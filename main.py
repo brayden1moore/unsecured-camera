@@ -38,9 +38,10 @@ def index():
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
     loc = info['loc']
+    print(info)
     X, Y = latlon_to_pixel(info['loc'])
-    proxied_url = f"/video/{ip}/mjpg/video.mjpg"  # Replace with your specific path
-    return render_template('index.html', name=name, url=proxied_url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
+    print(url)
+    return render_template('index.html', name=name, url=url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='7860')
+    app.run(host='0.0.0.0', port='7860', debug=True)
