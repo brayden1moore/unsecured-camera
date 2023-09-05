@@ -60,6 +60,10 @@
             object-fit: contain; 
         }
 
+        .feed, .info {
+            flex: 1;  
+        }
+      
         .map-div {
             width: 100%; 
             object-fit: contain;        
@@ -76,19 +80,14 @@
         }
 
         @media only screen and (max-width: 768px) {
-          .flex-container {
-            flex-direction: column;
-            align-items: center;
-          }
-          .outer-container {
-            width: 100%;
-          }
-          .feed {
-            width: 90%;  /* or set it to 100% if you want it to take the full width */
-          }
-          .info {
-            width: 90%;
-          }
+            .flex-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .feed, .info {
+                width: 90%;  /* full width for mobile */
+                flex: none;  /* reset flex for mobile */
+            }
         }
 
     </style>
