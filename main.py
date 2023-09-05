@@ -33,7 +33,7 @@ def proxy(url):
         req = requests.get(f'http://{url}', stream=True, timeout=20)
         return Response(req.iter_content(chunk_size=10*1024), content_type=req.headers['content-type'])
     except requests.exceptions.RequestException as e:
-        return f"An error occurred: {e}", 500
+        return send_file('static/error.png', mimetype='image/png')
 
 @app.route('/')
 def index():
