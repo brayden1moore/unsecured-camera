@@ -56,6 +56,8 @@
             border-width: 1px;
             border-color: yellow;
             margin-right: 3%;
+            width: 50%; 
+            height:  500px;
         }
 
         .map-div {
@@ -63,8 +65,17 @@
             border-style: solid;
             border-width: 1px;
             border-color: yellow;
+            position: relative; 
+            width: 90%; 
+            height: 300px; 
+            margin-bottom: 3%;
         }
 
+        .map {
+            width: 100%; 
+            height: 100%;
+        }
+      
         a:hover {
             background-color: yellow;
             color: black;
@@ -85,12 +96,12 @@
     <div class="outer-container">
         <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> a random unsecured camera</h1>
                 <div class="flex-container">
-                    <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" style="width: 50%; height:  500px;" />
+                    <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}"  />
                     <div style="display: flex; flex-direction: column; align-items: flex-start;">
 
-                        <div class="map-div" style="position: relative; width: 90%; height: 300px; margin-bottom: 3%;">
+                        <div class="map-div">
                             <div style="position: relative;">
-                                <img id="map" src="{{ url_for('static', filename='map.png') }}" style="width: 100%; height: 100%;" />
+                                <img id="map" src="{{ url_for('static', filename='map.png') }}" />
                                 <div class="dot" style="left: {{ X }}%; top: {{ Y }}%;"></div>
                                 <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
                             </div>
