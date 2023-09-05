@@ -11,6 +11,18 @@ with open('video_dict.pkl', 'rb') as f:
 
 app = Flask(__name__)
 
+from time import sleep
+
+def get_video_feed(url, retries=3, backoff_factor=0.3):
+    for i in range(retries):
+        try:
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                return response
+        except requests.exceptions.Timeout:
+            sleep((2 ** i) * backoff_factor)
+    return None
+
 def get_ip_info(ip_address):
     try:
         response = requests.get(f"http://ipinfo.io/{ip_address}/json")
@@ -29,7 +41,7 @@ def latlon_to_pixel(loc):
 
 @app.route('/video/<path:url>')
 def video(url):
-    req = requests.get(f"http://{url}", stream=True)
+    req = get_video_feed(url)
 
     def generate():
         for chunk in req.iter_content(chunk_size=1024):
