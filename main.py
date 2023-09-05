@@ -55,7 +55,7 @@ def proxy(url):
         
         content_type = req.headers['content-type']
         
-        return Response(req.iter_content(chunk_size=10*1024), content_type=content_type, headers={"Connection": "close"})
+        return Response(req.iter_content(chunk_size=10*1024), content_type=content_type, headers={"Content-Length": "99999999"})
         
     except requests.exceptions.RequestException as e:
         print(f'MY Error: {e}')
