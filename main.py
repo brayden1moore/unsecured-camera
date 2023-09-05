@@ -29,6 +29,7 @@ def latlon_to_pixel(loc):
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
+    print(url)
     retries = 3
     while retries > 0:
         try:
