@@ -77,8 +77,12 @@
         }
 
         .feed {
-          width: 90%;
+          width: 90vw;
           height: 500px;
+        }
+
+        .info {
+          width: 90vw;
         }
       }
 
@@ -90,7 +94,7 @@
         <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> a random unsecured camera</h1>
                 <div class="flex-container">
                     <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" style="width: 800px; height: 600px;" />
-                    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                    <div class="info" style="display: flex; flex-direction: column; align-items: flex-start;">
 
                         <div class="map-div" style="position: relative; width: 500px; height: 300px; margin-bottom: 3%;">
                             <div style="position: relative;">
