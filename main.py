@@ -30,7 +30,7 @@ def latlon_to_pixel(loc):
 @app.route('/')
 def index():
     feed = random.randint(0, len(feed_dict) - 1)
-    url = feed_dict[feed]['url'].replace('http://','https://')
+    url = feed_dict[feed]['url']
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_ip_info(ip)
     name = (info['city'] + ", " + info['region'] + ", " + pycountry.countries.get(alpha_2=info['country']).name).lower()
@@ -38,10 +38,16 @@ def index():
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
     loc = info['loc']
-    print(info)
     X, Y = latlon_to_pixel(info['loc'])
-    print(url)
     return render_template('index.html', name=name, url=url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
+
+@app.route('/proxy/<path:url>')
+def proxy(url):
+    try:
+        req = requests.get(f'http://{url}', stream=True, timeout=10)
+        return Response(req.iter_content(chunk_size=10 * 1024), content_type=req.headers['content-type'])
+    except requests.exceptions.RequestException as e:
+        return f"An error occurred: {e}"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860', debug=True)
