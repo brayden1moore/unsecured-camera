@@ -44,7 +44,7 @@ def proxy(url):
         return Response(req.iter_content(chunk_size=10*1024), content_type=content_type)
         
     except requests.exceptions.RequestException as e:
-        print(f'Error: {e}')
+        print(f'MY Error: {e}')
         return send_file('static/error.png', mimetype='image/png')
 
 @app.route('/')
