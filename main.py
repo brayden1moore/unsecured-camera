@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, send_file, stream_with_context
+from flask import Flask, Response, render_template, send_file
 import requests
 import random
 import pickle as pkl
@@ -27,20 +27,10 @@ def latlon_to_pixel(loc):
     x = ((longitude+180)/360)
     return x*100, y*100
 
-@app.route('/video/<path:url>')
-def video(url):
-    req = requests.get('https://' + url, timeout=10)
-
-    def generate():
-        for chunk in req.iter_content(chunk_size=1024):
-            yield chunk
-
-    return Response(stream_with_context(generate()), content_type=req.headers['content-type'])
-
 @app.route('/')
 def index():
     feed = random.randint(0, len(feed_dict) - 1)
-    url = feed_dict[feed]['url']
+    url = feed_dict[feed]['url'].replace('http://','https://')
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_ip_info(ip)
     name = (info['city'] + ", " + info['region'] + ", " + pycountry.countries.get(alpha_2=info['country']).name).lower()
