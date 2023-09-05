@@ -50,33 +50,24 @@
             width: 80vw;
         }
 
-        .feed-wrapper {
-          width: 100%;
-          padding-top: 75%; /* 4:3 Aspect Ratio */
-          position: relative; /* If you want text inside of the container to be aligned to the bottom */
+        .feed-wrapper, .info {
+            flex: 1;
+            max-width: 50%;
         }
 
-        .feed, .info {
-          flex: 1;
-          max-width: 50%; /* Limit each to half the container's width */
-        }
-      
         .feed-wrapper {
-            padding: 1%;
-            border-style: solid;
-            border-width: 1px;
-            border-color: yellow;
-            margin-right: 3%;
-          position: relative;
+            padding-top: 56.25%;  /* 16:9 Aspect Ratio */
+            position: relative;
+            border: 1px solid yellow;
         }
-        
+
         .feed {
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
       
         .map-div {
@@ -95,19 +86,15 @@
         }
 
         @media only screen and (max-width: 768px) {
-          .flex-container {
-            flex-direction: column;
-            align-items: center;
-          }
-          
-          .feed, .info {
-            max-width: 100%; /* Allow them to take up the entire width */
-            width: 90%; /* Set width to 90% of the container */
-          }
-          
-          .feed-wrapper {
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-          }
+            .flex-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feed-wrapper, .info {
+                max-width: 100%;
+                width: 90%;
+            }
         }
 
     </style>
@@ -116,10 +103,10 @@
 <body style="background-color: black;">
     <div class="outer-container">
         <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> a random unsecured camera</h1>
-                <div class="flex-container">
-                    <div class="feed-wrapper">
-                        <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" />
-                    </div>
+        <div class="flex-container">
+            <div class="feed-wrapper">
+                <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" />
+            </div>
 
                     <div class="info" style="display: flex; flex-direction: column; align-items: flex-start;">
 
