@@ -56,6 +56,8 @@
             border-width: 1px;
             border-color: yellow;
             margin-right: 3%;
+            max-width: 100%; 
+            height: auto; 
         }
 
         .map-div {
@@ -71,26 +73,21 @@
             transition: 0.5s ease-in-out;
         }
 
-      @media only screen and (max-width: 768px) {
-        .flex-container {
-          width: 90vw;
-          flex-direction: column;
-          align-items: center;
+        @media only screen and (max-width: 768px) {
+          .flex-container {
+            flex-direction: column;
+            align-items: center;
+          }
+          .outer-container {
+            width: 100%;
+          }
+          .feed {
+            width: 90%;  /* or set it to 100% if you want it to take the full width */
+          }
+          .info {
+            width: 90%;
+          }
         }
-
-        .outer-container {
-          width: 90vw;
-        }
-        
-        .feed {
-          width: 500px;
-          height: 500px;
-        }
-
-        .info {
-          width: 90vw;
-        }
-      }
 
     </style>
 </head>
