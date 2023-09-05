@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>a random unsecured security camera</title>
     <style>
         body {
@@ -39,87 +38,85 @@
 
         .flex-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: left;
+            align-items: top;
         }
 
-        .feed-wrapper, .info {
-            flex-basis: 48%;
-        }
-
-        .feed-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border: 1px solid yellow;
+        .outer-container {
+            margin: auto;
+            justify-content: center;
+            align-items: left;
+            max-width: 80vw;
         }
 
         .feed {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            padding: 1%;
+            border-style: solid;
+            border-width: 1px;
+            border-color: yellow;
+            margin-right: 3%;
         }
 
         .map-div {
-            position: relative;
-            width: 100%;
-            padding-bottom: 60%;  /* aspect ratio */
-            overflow: hidden;
+            padding: 1%;
+            border-style: solid;
+            border-width: 1px;
+            border-color: yellow;
         }
 
-        @media only screen and (max-width: 768px) {
-            .flex-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .feed-wrapper, .info {
-                width: 90%;
-            }
-            
-            .feed-wrapper {
-                padding-bottom: 50%;
-            }
+        a:hover {
+            background-color: yellow;
+            color: black;
+            transition: 0.5s ease-in-out;
         }
+
+      @media only screen and (max-width: 768px) {
+        .flex-container {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
 
     </style>
 </head>
 
 <body style="background-color: black;">
     <div class="outer-container">
-        <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;">a random unsecured camera</h1>
-        <div class="flex-container">
-            <div class="feed-wrapper">
-                <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" />
-            </div>
-            <div class="info">
-                <div class="map-div">
-                    <img id="map" src="{{ url_for('static', filename='map.png') }}" />
-                    <div class="dot" style="left: {{ X }}%; top: {{ Y }}%;"></div>
-                    <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
+        <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> a random unsecured camera</h1>
+                <div class="flex-container">
+                    <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" style="width: 90%; height: 300px;" />
+                    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+
+                        <div class="map-div" style="position: relative; width: 90%; height: 300px; margin-bottom: 3%;">
+                            <div style="position: relative;">
+                                <img id="map" src="{{ url_for('static', filename='map.png') }}" style="width: 90%; height: 300px;" />
+                                <div class="dot" style="left: {{ X }}%; top: {{ Y }}%;"></div>
+                                <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
+                            </div>
+                        </div>
+                        <h2 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h2>
+                        <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ loc }} <br><br> {{ ip }} <br><br> {{ org }} <br><br> {{ time }}</p>
+
+                        <a href="." style="margin-top: 3%; display: inline-block;">
+                            <button class="hoverButton" style="border: 1px solid yellow; background-color: transparent; color: rgb(83, 83, 83); padding: 10px;">
+                            another
+                            </button>
+                        </a>
+                    </div>
                 </div>
-                <h2 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h2>
-                <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ loc }} <br><br> {{ ip }} <br><br> {{ org }} <br><br> {{ time }}</p>
-                <a href="." style="margin-top: 3%; display: inline-block;">
-                    <button class="hoverButton" style="border: 1px solid yellow; background-color: transparent; color: rgb(83, 83, 83); padding: 10px;">
-                        another
-                    </button>
-                </a>
             </div>
-        </div>
     </div>
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const feed = document.getElementById("feed");
             feed.src = "{{ url_for('static', filename='loading.gif') }}"
             setTimeout(function() {
-                const newUrl = "{{ url }}";
+                const newUrl = "{{ url }}"; 
                 feed.src = newUrl;
+            }); 
             });
-        });
     </script>
 </body>
 
