@@ -7,6 +7,7 @@ import datetime as dt
 import pytz
 
 app = Flask(__name__)
+app.secret_key = 'green-flounder'
 
 with open('video_dict.pkl', 'rb') as f:
     feed_dict = pkl.load(f)
