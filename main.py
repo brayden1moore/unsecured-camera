@@ -65,7 +65,22 @@ def index():
     loc = info['loc']
     X, Y = latlon_to_pixel(info['loc'])
     proxy_url = 'proxy/' + url.split('http://')[-1] 
-    return render_template('index.html', name=name, url=proxy_url, info=info, country=country, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
+    
+    loc_link = f"https://www.google.com/maps/search/{loc}"
+    ip_link = url
+    return render_template('index.html', 
+                               name=name, 
+                               url=proxy_url, 
+                               info=info, 
+                               country=country, 
+                               time=time, 
+                               ip=ip, 
+                               ip_link=ip_link
+                               org=org, 
+                               loc=loc, 
+                               loc_link=loc_link, 
+                               X=X, 
+                               Y=Y)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860', debug=True)
