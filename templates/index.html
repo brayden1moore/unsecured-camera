@@ -104,7 +104,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const feed = document.getElementById("feed");
-            feed.src = "{{ url_for('static', filename='loading.gif') }}"
+            feed.src = "https://i.ibb.co/ByxfFPw/loading.gif"
             setTimeout(function() {
                 const newUrl = "{{ url }}"; 
                 feed.src = newUrl;
