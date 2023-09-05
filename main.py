@@ -10,6 +10,9 @@ app = Flask(__name__)
 
 with open('video_dict.pkl', 'rb') as f:
     feed_dict = pkl.load(f)
+    
+with open('live_urls.pkl', 'rb') as f:
+    live_urls = pkl.load(f)
 
 def get_ip_info(ip_address):
     try:
@@ -45,7 +48,8 @@ def proxy(url):
 @app.route('/')
 def index():
     feed = random.randint(0, len(feed_dict) - 1)
-    url = feed_dict[feed]['url']
+    #url = feed_dict[feed]['url']
+    url = live_urls[feed]
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_ip_info(ip)
     country = (pycountry.countries.get(alpha_2=info['country']).name).lower()
