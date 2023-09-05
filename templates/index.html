@@ -39,20 +39,19 @@
 
         .flex-container {
             display: flex;
-            justify-content: space-between;  /* Adds space between feed and info */
+            justify-content: space-between;
         }
 
         .feed-wrapper, .info {
-            flex-basis: 48%;  /* Takes up roughly half the space, accounting for margins */
+            flex-basis: 48%;
         }
 
         .feed-wrapper {
             position: relative;
-            padding-bottom: 56.25%;  /* 16:9 ratio */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border: 1px solid yellow;
-            margin-right: 2%;  /* Reintroduced margin */
         }
 
         .feed {
@@ -64,20 +63,33 @@
             object-fit: contain;
         }
 
+        .map-div {
+            position: relative;
+            width: 100%;
+            padding-bottom: 60%;  /* aspect ratio */
+            overflow: hidden;
+        }
+
+        #map, .dot, .pulse {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
         @media only screen and (max-width: 768px) {
             .flex-container {
                 flex-direction: column;
                 align-items: center;
             }
-
+            
             .feed-wrapper, .info {
-                flex-basis: auto;
                 width: 90%;
             }
             
             .feed-wrapper {
-                padding-bottom: 50%;  /* Adjusting for mobile */
-                margin-right: 0;  /* Remove margin */
+                padding-bottom: 50%;
             }
         }
 
@@ -86,42 +98,36 @@
 
 <body style="background-color: black;">
     <div class="outer-container">
-        <!-- ... existing content ... -->
+        <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;">a random unsecured camera</h1>
         <div class="flex-container">
             <div class="feed-wrapper">
                 <img id="feed" class="feed" src="{{ url_for('proxy', url=url) }}" />
             </div>
             <div class="info">
-                      <div class="map-div" style="position: relative; margin-bottom: 3%;">
-                            <div style="position: relative;">
-                                <img id="map" src="{{ url_for('static', filename='map.png') }}" />
-                                <div class="dot" style="left: {{ X }}%; top: {{ Y }}%;"></div>
-                                <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
-                            </div>
-                        </div>
-                        <h2 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h2>
-                        <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ loc }} <br><br> {{ ip }} <br><br> {{ org }} <br><br> {{ time }}</p>
-
-                        <a href="." style="margin-top: 3%; display: inline-block;">
-                            <button class="hoverButton" style="border: 1px solid yellow; background-color: transparent; color: rgb(83, 83, 83); padding: 10px;">
-                            another
-                            </button>
-                        </a>
-                    </div>
+                <div class="map-div">
+                    <img id="map" src="{{ url_for('static', filename='map.png') }}" />
+                    <div class="dot" style="left: {{ X }}%; top: {{ Y }}%;"></div>
+                    <div class="pulse" style="left: {{ X }}%; top: {{ Y }}%;"></div>
                 </div>
+                <h2 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h2>
+                <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ loc }} <br><br> {{ ip }} <br><br> {{ org }} <br><br> {{ time }}</p>
+                <a href="." style="margin-top: 3%; display: inline-block;">
+                    <button class="hoverButton" style="border: 1px solid yellow; background-color: transparent; color: rgb(83, 83, 83); padding: 10px;">
+                        another
+                    </button>
+                </a>
             </div>
+        </div>
     </div>
-
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const feed = document.getElementById("feed");
             feed.src = "{{ url_for('static', filename='loading.gif') }}"
             setTimeout(function() {
-                const newUrl = "{{ url }}"; 
+                const newUrl = "{{ url }}";
                 feed.src = newUrl;
-            }); 
             });
+        });
     </script>
 </body>
 
