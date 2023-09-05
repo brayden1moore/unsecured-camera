@@ -31,14 +31,20 @@ def latlon_to_pixel(loc):
     x = ((longitude+180)/360)
     return x*100, y*100
 
+from urllib.parse import urlparse, parse_qs
+
 @app.route('/proxy/<path:url>')
 def proxy(url):
-    print('URL:', url) 
+    
+    parsed_url = urlparse(f'http://{url}')
+    query_params = parse_qs(parsed_url.query)
+
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
-        req = requests.get(f'http://{url}', headers=headers, stream=True, timeout=20)
-        content_type = req.headers['content-type']
+        req = requests.get(f'http://{parsed_url.scheme}://{parsed_url.netloc}{parsed_url.path}', 
+                            params=query_params, headers=headers, stream=True, timeout=20)
         
+        content_type = req.headers['content-type']
         return Response(req.iter_content(chunk_size=10*1024), content_type=content_type)
         
     except requests.exceptions.RequestException as e:
