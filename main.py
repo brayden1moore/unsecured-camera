@@ -27,6 +27,16 @@ def latlon_to_pixel(loc):
     x = ((longitude+180)/360)
     return x*100, y*100
 
+@app.route('/video/<path:url>')
+def video(url):
+    req = requests.get(f"http://{url}", stream=True)
+
+    def generate():
+        for chunk in req.iter_content(chunk_size=1024):
+            yield chunk
+
+    return Response(stream_with_context(generate()), content_type=req.headers['content-type'])
+
 @app.route('/')
 def index():
     feed = random.randint(0, len(feed_dict) - 1)
@@ -38,10 +48,9 @@ def index():
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
     loc = info['loc']
-    print(info)
     X, Y = latlon_to_pixel(info['loc'])
-    print(url)
-    return render_template('index.html', name=name, url=url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
+    proxied_url = f"/video/{ip}/mjpg/video.mjpg"  # Replace with your specific path
+    return render_template('index.html', name=name, url=proxied_url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860')
