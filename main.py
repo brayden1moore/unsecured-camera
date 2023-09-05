@@ -37,7 +37,7 @@ def proxy(url):
     
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
-        req = requests.get(f'http://{url}', headers=headers, stream=True, timeout=15)
+        req = requests.get(f'http://{url}', headers=headers, stream=True, timeout=20)
         content_type = req.headers['content-type']
         
         return Response(req.iter_content(chunk_size=10*1024), content_type=content_type)
