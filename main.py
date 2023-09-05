@@ -30,7 +30,7 @@ def latlon_to_pixel(loc):
 @app.route('/proxy/<path:url>')
 def proxy(url):
     try:
-        req = requests.get(f'http://{url}', stream=True, timeout=10)
+        req = requests.get(f'http://{url}', stream=True, timeout=20)
         return Response(req.iter_content(chunk_size=10*1024), content_type=req.headers['content-type'])
     except requests.exceptions.RequestException as e:
         return f"An error occurred: {e}", 500
