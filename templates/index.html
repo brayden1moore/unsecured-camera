@@ -128,7 +128,13 @@
                     <div class="info">
 
                         <h3 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h3>
-                        <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ loc }} <br>< {{ ip }} <br> {{ org }} <br> {{ time }}</p>
+                        
+                      <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">
+                          <a href="{{ loc_link }}">{{ loc }}</a> <br>
+                          <a href="{{ ip_link }}">{{ ip }}</a> <br>
+                          {{ org }}<br>
+                          {{ time }}
+                        </p>
 
 
                       <div style="display: flex; margin-top: 3%;">
