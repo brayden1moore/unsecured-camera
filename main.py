@@ -29,11 +29,11 @@ def latlon_to_pixel(loc):
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
-    req = requests.get('http://' + url, stream=True)
-    def generate():
-        for chunk in req.iter_content(chunk_size=1024):
-            yield chunk
-    return Response(generate(), content_type=req.headers['content-type'])
+    try:
+        req = requests.get(f'http://{url}', stream=True, timeout=10)
+        return Response(req.iter_content(chunk_size=10*1024), content_type=req.headers['content-type'])
+    except requests.exceptions.RequestException as e:
+        return f"An error occurred: {e}", 500
 
 @app.route('/')
 def index():
