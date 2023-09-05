@@ -129,6 +129,12 @@
                             another
                             </button>
                         </a>
+
+                      <a href="#" id="refreshButton" style="margin-left: 10px; display: inline-block;">
+                          <button style="border: 1px solid yellow; background-color: transparent; color: rgb(83, 83, 83); padding: 10px;">
+                            refresh
+                          </button>
+                        </a>
                       
                         <div class="map-div">
                             <img id="map" src="{{ url_for('static', filename='map_populated.png') }}" style="width: 100%; height: 100%;" />
@@ -151,6 +157,13 @@
                 feed.src = newUrl;
             }); 
             });
+
+       document.getElementById("refreshButton").addEventListener("click", function() {
+          const feed = document.getElementById("feed");
+          const currentSrc = feed.src;
+          feed.src = ""; // Clear current src
+          setTimeout(() => { feed.src = currentSrc; }, 100); // Reset src after a short delay
+        });
     </script>
 </body>
 
