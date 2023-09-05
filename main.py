@@ -33,10 +33,10 @@ def latlon_to_pixel(loc):
 
 from urllib.parse import urlparse, parse_qs
 
-@app.route('/proxy/<path:url>')
+@app.route('/proxy/<string:scheme>/<path:url>')
 def proxy(url):
-    
-    parsed_url = urlparse(f'http://{url}')
+    full_url = f"{scheme}://{url}"
+    parsed_url = urlparse(full_url)
     query_params = parse_qs(parsed_url.query)
 
     headers = {'User-Agent': 'Mozilla/5.0'}
