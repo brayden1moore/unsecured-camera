@@ -38,16 +38,10 @@ def index():
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
     loc = info['loc']
+    print(info)
     X, Y = latlon_to_pixel(info['loc'])
+    print(url)
     return render_template('index.html', name=name, url=url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
-
-@app.route('/proxy/<path:url>')
-def proxy(url):
-    try:
-        req = requests.get(url, stream=True, timeout=10)
-        return Response(req.iter_content(chunk_size=10 * 1024), content_type=req.headers['content-type'])
-    except requests.exceptions.RequestException as e:
-        return f"An error occurred: {e}"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860', debug=True)
