@@ -49,7 +49,7 @@ def proxy(url):
         clean_url = url.replace('proxy/', '')
         print('Cleaned URL:', clean_url)
         
-        req = requests.get(f'http://{clean_url}', headers=headers, stream=True, timeout=30)
+        req = requests.get(f'http://{clean_url}', headers=headers, stream=True)
         
         content_type = req.headers['content-type']
         
