@@ -44,4 +44,4 @@ def index():
     return render_template('index.html', name=name, url=url, info=info, time=time, ip=ip, org=org, loc=loc, X=X, Y=Y)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='7860', debug=True)
+    app.run(host='0.0.0.0', port='7860')
