@@ -2,3 +2,4 @@ Flask==2.2.5
 pycountry==22.3.5
 pytz==2023.3
 requests==2.31.0
+gunicorn==20.1.0
