@@ -132,14 +132,6 @@
                     <div class="info">
 
                         <h3 style="border-bottom: 1px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h3>
-                        
-                      <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">
-                        <a href="{{ ip_link }}" target="_blank">ip: {{ ip }}</a> <br>  
-                          lat, lon: {{ loc }}<br>
-                          owner: {{ org }}<br>
-                          time: {{ time }}
-                        </p>
-
 
                       <div style="display: flex; margin-top: 3%;">
                         <a href="?new=true" style="margin-right: 10px; display: inline-block;">
@@ -153,6 +145,14 @@
                           </button>
                         </a>
                       </div>
+                      
+                      <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">
+                        <a href="{{ ip_link }}" target="_blank">ip: {{ ip }}</a> <br>  
+                          lat, lon: {{ loc }}<br>
+                          owner: {{ org }}<br>
+                          time: {{ time }}
+                        </p>
+
                       
                         <div class="map-div">
                             <img id="map" src="{{ url_for('static', filename='map_populated.png') }}" style="width: 100%; height: 100%;" />
