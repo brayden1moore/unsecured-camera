@@ -41,7 +41,7 @@ def latlon_to_pixel(loc):
 
 @app.route('/video/<path:url>')
 def video(url):
-    req = get_video_feed(url)
+    req = get_video_feed('https://' + url)
 
     def generate():
         for chunk in req.iter_content(chunk_size=1024):
