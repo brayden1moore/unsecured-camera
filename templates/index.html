@@ -167,14 +167,38 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const feed = document.getElementById("feed");
-            feed.src = "{{ url_for('static', filename='loading.gif') }}"
-            setTimeout(function() {
-                const newUrl = "{{ url }}"; 
-                feed.src = newUrl;
-            }); 
-            });
+        // document.addEventListener("DOMContentLoaded", function() {
+        //    const feed = document.getElementById("feed");
+        //    feed.src = "{{ url_for('static', filename='loading.gif') }}"
+        //    setTimeout(function() {
+        //       const newUrl = "{{ url }}"; 
+        //        feed.src = newUrl;
+        //    }); 
+        //   });
+
+
+      document.addEventListener("DOMContentLoaded", function() {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', "{{ url }}", true);
+          xhr.setRequestHeader('Cache-Control', 'no-cache');
+          xhr.responseType = 'arraybuffer';
+        
+          var image = document.getElementById("feed");
+          var boundary = null; // You'll need to get this from the server's response header
+        
+          xhr.onload = function(e) {
+            if (xhr.status == 200) {
+              // Parse and display the image
+              var arrayBufferView = new Uint8Array(this.response);
+              var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+              var urlCreator = window.URL || window.webkitURL;
+              var imageUrl = urlCreator.createObjectURL(blob);
+              image.src = imageUrl;
+            }
+          };
+        
+          xhr.send();
+        });
     </script>
 </body>
 
