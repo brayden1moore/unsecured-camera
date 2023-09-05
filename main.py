@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, send_file, stream_with_context
+from flask import Flask, Response, render_template, send_file, stream_with_context,  session
 import requests
 import random
 import pickle as pkl
@@ -32,9 +32,7 @@ def latlon_to_pixel(loc):
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
-
     print('URL:', url) 
-    
     headers = {'User-Agent': 'Mozilla/5.0'}
     try:
         req = requests.get(f'http://{url}', headers=headers, stream=True, timeout=20)
@@ -46,10 +44,13 @@ def proxy(url):
         print(f'Error: {e}')
         return send_file('static/error.png', mimetype='image/png')
 
-
 @app.route('/')
 def index():
-    feed = random.randint(0, len(live_urls) - 1)
+    if 'current_feed' in session and request.args.get('new', 'false') == 'false':
+        feed = session['current_feed']
+    else:
+        feed = random.randint(0, len(live_urls) - 1)
+        session['current_feed'] = feed
     #url = feed_dict[feed]['url']
     url = live_urls[feed]
     ip = ''.join(url.split('//')[-1]).split(':')[0]
