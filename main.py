@@ -31,7 +31,7 @@ def latlon_to_pixel(loc):
 def proxy(url):
     print('URL:',url)
     try:
-        req = requests.get(f'http://{url}', stream=True, timeout=5)
+        req = requests.get(f'http://{url}', stream=True, timeout=15)
         return Response(req.iter_content(chunk_size=10*1024), content_type=req.headers['content-type'])
     except requests.exceptions.RequestException as e:
         print('error.')
