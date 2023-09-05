@@ -46,10 +46,8 @@ def proxy(url):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
     }
     try:
-        # Remove 'proxy/' from the url if present
         clean_url = url.replace('proxy/', '')
-        
-        print('Cleaned URL:', clean_url)  # For debugging
+        print('Cleaned URL:', clean_url)
         
         req = requests.get(f'http://{clean_url}', headers=headers, stream=True, timeout=15)
         content_type = req.headers['content-type']
