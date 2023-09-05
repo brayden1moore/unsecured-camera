@@ -59,7 +59,7 @@ def proxy(url):
         
     except requests.exceptions.RequestException as e:
         print(f'MY Error: {e}')
-        return redirect("https://braydenmoore-a-random-unsecured-camera.hf.space/?new=true")
+        return redirect("/?new=true")
 
 
 @app.route('/')
