@@ -158,12 +158,12 @@
             }); 
             });
 
-        document.getElementById("refreshButton").addEventListener("click", function() {
-          const feed = document.getElementById("feed");
-          const currentSrc = feed.src;
-          const timestamp = new Date().getTime();  // Generate a unique timestamp
-          feed.src = `${currentSrc.split('?')[0]}?t=${timestamp}`;  // Append timestamp to the URL
-        });
+    document.getElementById("refreshButton").addEventListener("click", function() {
+        const feed = document.getElementById("feed");
+        const currentSrc = feed.src;
+        const timestamp = new Date().getTime();  // Generate a unique timestamp
+        feed.src = `${currentSrc.split('?')[0].split('&')[0]}?t=${timestamp}`;  // Append timestamp to the URL
+    });
     </script>
 </body>
 
