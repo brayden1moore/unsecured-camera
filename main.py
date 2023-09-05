@@ -58,7 +58,7 @@ def proxy(url):
         return Response(req.iter_content(chunk_size=50*1024), content_type=content_type)
         
     except requests.exceptions.RequestException as e:
-        print(f'MY Error: {e}')
+        print(f'Redirecting: {e}')
         return redirect("/?new=true")
 
 
