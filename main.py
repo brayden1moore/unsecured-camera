@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, send_file, stream_with_context, request, session
+from flask import Flask, Response, render_template, send_file, stream_with_context, request, session, redirect, url_fo
 import requests
 import random
 import pickle as pkl
@@ -49,20 +49,17 @@ def proxy(url):
         clean_url = url.replace('proxy/', '')
         print('Cleaned URL:', clean_url)
         
-        req = requests.get(f'{clean_url}', headers=headers, stream=True)
+        req = requests.get(f'{clean_url}', headers=headers, stream=True, timeout=10)
         print("Status Code:", req.status_code)
         print("Response Headers:", req.headers)
         
         content_type = req.headers['content-type']
         
-        return Response(req.iter_content(chunk_size=50*1024), content_type=content_type, headers={"Content-Length": "99999999"})
+        return Response(req.iter_content(chunk_size=50*1024), content_type=content_type)
         
     except requests.exceptions.RequestException as e:
         print(f'MY Error: {e}')
-        return send_file('static/error.png', mimetype='image/png')
-
-    except Exception as e:
-        print(f"General Error: {e}")
+        return redirect("https://braydenmoore-a-random-unsecured-camera.hf.space/?new=true")
 
 
 @app.route('/')
