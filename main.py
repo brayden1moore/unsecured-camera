@@ -71,7 +71,7 @@ def proxy(url):
         logging.error(f"Error in proxy: {str(e)}")
         session['exception_urls'].append(url)
         save_exception_urls(session['exception_urls'])
-        print('Added to exceptions:',session['exception_urls'])
+        print('Added to exceptions:',len(session['exception_urls']))
         logging.error(f"Error in proxy.\n\n")
         return send_file('static/error.png', mimetype='image/png')
 
