@@ -77,11 +77,11 @@ def proxy(url):
             req = requests.get(clean_url, headers=headers, stream=True, timeout=10)
             logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
             return Response(req.iter_content(chunk_size=512), content_type=req.headers['content-type'])
-    except requests.exceptions.RequestException as e:
+    except:
         session['exception_urls'].append(url)
         save_exception_urls(session['exception_urls'])
         print('Added to exceptions:',session['exception_urls'])
-        logging.error(f"Error in proxy: {e}")
+        logging.error(f"Error in proxy.")
         return send_file('static/error.png', mimetype='image/png')
 
 
