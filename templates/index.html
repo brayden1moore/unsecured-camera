@@ -169,16 +169,27 @@
         const feed = document.getElementById("feed");
         feed.src = "{{ url_for('static', filename='loading.gif') }}";
         
+        function setImageSource(url, isImage = false) {
+            const img = new Image();
+            img.onload = function() {
+                feed.src = this.src;
+                if (isImage) {
+                    setTimeout(() => setImageSource(url.replace("COUNTER", Math.random()), true), 500);
+                }
+            };
+            img.onerror = function() {
+                feed.src = "{{ url_for('static', filename='error.png') }}";
+            };
+            img.src = url;
+        }
+    
         const newUrl = "{{ url }}";
-        
-        const img = new Image();
-        img.onload = function() {
-            feed.src = this.src;
-        };
-        img.onerror = function() {
-            feed.src = "{{ url_for('static', filename='error.png') }}"; // You can set an error image here
-        };
-        img.src = newUrl;
+    
+        fetch(newUrl, { method: 'HEAD' })
+          .then(response => {
+            const isImage = response.headers.get('Content-Type').startsWith('image/');
+            setImageSource(newUrl.replace("COUNTER", Math.random()), isImage);
+          });
     });
     </script>
 </body>
