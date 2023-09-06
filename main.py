@@ -54,14 +54,15 @@ def proxy(url):
         clean_url = url.replace('proxy/', '')
         print('Cleaned URL:', clean_url)
         
-        req = requests.get(f'{clean_url}', headers=headers, stream=True, timeout=10)
-        print("Status Code:", req.status_code)
-        print("Response Headers:", req.headers)
-        
-        content_type = req.headers['content-type']
-        
-        return Response(req.iter_content(chunk_size=512), content_type=content_type)
-        
+        if '.jpg' in clean_url:
+            req = requests.get(f'{clean_url}', headers=headers, timeout=3)
+            content_type = req.headers['content-type']
+            return Response(req.content, content_type=content_type)
+        else:
+            req = requests.get(f'{clean_url}', headers=headers, stream=True, timeout=10)
+            content_type = req.headers['content-type']
+            return Response(req.iter_content(chunk_size=512), content_type=content_type)
+ 
     except:
         print(f'Redirecting')
         return send_file('static/error.png', mimetype='image/png')
