@@ -1,10 +1,10 @@
 ---
 title: A Random Unsecured Camera
-emoji: 🐠
-colorFrom: green
-colorTo: purple
+emoji: 🌍
+colorFrom: gray
+colorTo: yellow
 sdk: docker
-pinned: false
+pinned: true
 license: mit
 ---
 
