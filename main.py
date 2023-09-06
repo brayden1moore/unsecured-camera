@@ -40,11 +40,11 @@ def get_location(ip):
     reader = geolite2.reader()
     location = reader.get(ip)
     geolite2.close()
-    if location and 'location' in location:
+    if location:
         return {'country': location['country']['names']['en'],
                 'city': location['city']['names']['en'] if 'city' in location else '',
                 'region': location['subdivisions'][0]['names']['en'] if 'subdivisions' in location else '',
-                'loc': str(location['location']['longitude']) + ',' + str(location['location']['latitude']),
+                'loc': str(location['location']['latitude']) + ',' + str(location['location']['longitude']),
                 'timezone': location['location']['time_zone'] if 'time_zone' in location['location'] else 'America/New_York'}
 
 def latlon_to_pixel(loc):
@@ -101,7 +101,7 @@ def index():
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     print('IP:',ip)
     info = get_location(ip)
-    country = info['country']
+    country = info['country'].lower()
     name = (info['city'] + ", " + info['region'] + ", " + country).lower()
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
