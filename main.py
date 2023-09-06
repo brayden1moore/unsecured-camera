@@ -68,7 +68,7 @@ def proxy(url):
     clean_url = url.replace('proxy/', '')
     
     try:
-        print('REQUESTING URL:', clean_url)
+        print('\n\nREQUESTING URL:', clean_url)
         req = requests.get(clean_url, headers=headers, stream=True, timeout=15)
         logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
         return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
