@@ -12,6 +12,9 @@ COPY . ./
 # Install production dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Modify DNS settings
+RUN echo 'nameserver 8.8.8.8' > /etc/resolv.conf
+
 # Create a non-root user and switch to it
 RUN useradd -m -u 1000 user
 USER user
