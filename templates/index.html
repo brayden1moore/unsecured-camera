@@ -147,7 +147,7 @@
                           ip: {{ ip }}<br>  
                           lat, lon: {{ loc }}<br>
                           owner: {{ org }}<br>
-                          time: {{ time }}
+                          <span id="time"></span>
                         </p>
 
                       
@@ -189,6 +189,24 @@
     
         img.src = newUrl;
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const timezone = "{{ timezone }}"; 
+      setInterval(() => {
+        const now = new Date();
+        const options = { 
+          timeZone: timezone, 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit',
+          hour12: true
+        };
+        const timeString = now.toLocaleTimeString('en-US', options);
+        document.getElementById("time").textContent = timeString;
+      }, 1000);
+    });
+
+      
     </script>
 </body>
 
