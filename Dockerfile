@@ -1,7 +1,5 @@
-
 # Use the official lightweight Python image.
-# https://hub.docker.com/_/python
-FROM python:3.11-slim
+FROM python:3.11
 
 # Allow statements and log messages to immediately appear in the logs
 ENV PYTHONUNBUFFERED True
@@ -14,18 +12,17 @@ COPY . ./
 # Install production dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Create a non-root user and switch to it
 RUN useradd -m -u 1000 user
 USER user
 ENV HOME=/home/user \
 	PATH=/home/user/.local/bin:$PATH
 
+# Set work directory
 WORKDIR $APP_HOME
 
+# Change ownership of app files to the new user
 COPY --chown=user . $HOME/app
 
-# Run the web service on container startup. Here we use the gunicorn
-# webserver, with one worker process and 8 threads.
-# For environments with multiple CPU cores, increase the number of workers
-# to be equal to the cores available.
-# Timeout is set to 0 to disable the timeouts of the workers to allow Cloud Run to handle instance scaling.
-CMD exec gunicorn --bind 0.0.0.0:7860 --workers 1 --threads 8 --timeout 120 main:app
+# Run the web service on container startup.
+CMD exec gunicorn --bind 0.0.0.0:7860 --workers $(nproc) --threads 8 --timeout 120 main:app
