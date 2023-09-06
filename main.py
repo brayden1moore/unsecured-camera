@@ -53,6 +53,10 @@ def proxy(url):
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
     }
+
+    clean_url = url.replace('proxy/', '')
+    print('Cleaned URL:', clean_url)
+    
     try:
         if '.jpg' in clean_url and 'stream' not in clean_url:
             req = requests.get(clean_url, headers=headers, timeout=3)
