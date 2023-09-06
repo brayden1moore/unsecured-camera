@@ -93,6 +93,7 @@ def index():
     org = info['org'].lower()
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
+    time = time.strftime("%I:%M:%S %p")
     loc = info['loc']
     X, Y = latlon_to_pixel(info['loc'])
     proxy_url = 'proxy/' + url
