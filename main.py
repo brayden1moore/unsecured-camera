@@ -91,6 +91,7 @@ def index():
     
     if 'current_feed' in session and request.args.get('new', 'false') == 'false':
         feed = session['current_feed']
+        url = live_urls[feed]
     else:
         while True:
             feed = random.randint(0, len(live_urls) - 1)
