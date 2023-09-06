@@ -45,7 +45,7 @@ def get_location(ip):
                 'city': location['city']['names']['en'] if 'city' in location else '',
                 'region': location['subdivisions'][0]['names']['en'] if 'subdivisions' in location else '',
                 'loc': str(location['location']['longitude']) + ',' + str(location['location']['latitude']),
-                'timezone': location['location']['time_zone'] if 'time_zone' in location else ''}
+                'timezone': location['location']['time_zone'] if 'time_zone' in location['location'] else 'America/New_York'}
 
 def latlon_to_pixel(loc):
     latitude = float(loc.split(',')[0])
