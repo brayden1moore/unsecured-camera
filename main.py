@@ -42,7 +42,7 @@ def get_location(ip):
     geolite2.close()
     if location and 'location' in location:
         return {'country': location['country']['names']['en'],
-                'city': location['city']['names']['en'],
+                'city': location['city']['names']['en'] if 'city' in location,
                 'region': location['subdivisions'][0]['names']['en'] if len(location['subdivisions'])>0 else '',
                 'loc': str(location['location']['longitude']) + ',' + str(location['location']['latitude']),
                 'timezone': location['location']['time_zone']}
