@@ -69,11 +69,12 @@ def proxy(url):
     
     try:
         logging.info(f"Sending request to: {clean_url}")
-        req = requests.get(clean_url, headers=headers, stream=True, timeout=5)
+        req = requests.get(clean_url, headers=headers, stream=True, timeout=10)
         logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
         return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
-        
-    except:
+    
+    except Exception as e:
+        logging.error(f"Error in proxy: {str(e)}")
         session['exception_urls'].append(url)
         save_exception_urls(session['exception_urls'])
         print('Added to exceptions:',session['exception_urls'])
