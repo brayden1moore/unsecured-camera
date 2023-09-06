@@ -5,6 +5,7 @@ import pickle as pkl
 import pycountry
 import datetime as dt
 import pytz
+from io import BytesIO
 
 app = Flask(__name__)
 app.secret_key = 'green-flounder'
@@ -17,13 +18,6 @@ with open('live_urls.pkl', 'rb') as f:
 
 with open('active_urls.pkl', 'rb') as f:
     live_urls = pkl.load(f)
-
-from io import BytesIO
-url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
-response = requests.get(url)
-exceptions = pkl.loads(BytesIO(response.content).read())
-
-live_urls = [i for i in live_urls if i not in exceptions]
 
 def get_ip_info(ip_address):
     try:
@@ -45,6 +39,10 @@ from urllib.parse import urlparse, parse_qs
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
+    url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
+    response = requests.get(url)
+    exceptions = pkl.loads(BytesIO(response.content).read())
+    
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'Accept-Encoding': 'gzip, deflate',
@@ -81,6 +79,13 @@ def proxy(url):
 
 @app.route('/')
 def index():
+    url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
+    response = requests.get(url)
+    exceptions = pkl.loads(BytesIO(response.content).read())
+    print(exceptions)
+    
+    live_urls = [i for i in live_urls if i not in exceptions]
+    
     if 'current_feed' in session and request.args.get('new', 'false') == 'false':
         feed = session['current_feed']
     else:
