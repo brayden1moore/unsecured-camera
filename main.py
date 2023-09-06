@@ -106,6 +106,7 @@ def index():
                                info=info, 
                                country=country, 
                                time=time, 
+                               timezone=timezone,
                                ip=ip, 
                                ip_link=ip_link,
                                org=org, 
