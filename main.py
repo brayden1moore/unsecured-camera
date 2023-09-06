@@ -18,8 +18,10 @@ with open('live_urls.pkl', 'rb') as f:
 with open('active_urls.pkl', 'rb') as f:
     live_urls = pkl.load(f)
 
-with open('exceptions.pkl', 'rb') as f:
-    exceptions = pkl.load(f)
+from io import BytesIO
+url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
+response = requests.get(url)
+exceptions = pickle.loads(BytesIO(response.content).read())
 
 live_urls = [i for i in live_urls if i not in exceptions]
 
@@ -68,8 +70,12 @@ def proxy(url):
     except:
         print(f'Redirecting')
         exceptions.append(url)
-        with open('exceptions.pkl', 'wb') as f:
-            pkl.dump(exceptions, f)
+        byte_stream = BytesIO()
+        pickle.dump(exceptions, byte_stream)
+        byte_stream.seek(0)
+        url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
+        response = requests.put(url, data=byte_stream.read())
+        print(response)
         return send_file('static/error.png', mimetype='image/png')
 
 
