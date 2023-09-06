@@ -47,7 +47,7 @@ from urllib.parse import urlparse, parse_qs
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
-    session['exception_urls'] = load_exception_urls()
+
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'Accept-Encoding': 'gzip, deflate',
@@ -69,27 +69,21 @@ def proxy(url):
     
     except Exception as e:
         logging.error(f"Error in proxy: {str(e)}")
-        session['exception_urls'].append(url)
-        save_exception_urls(session['exception_urls'])
-        print('Added to exceptions:',len(session['exception_urls']))
-        logging.error(f"Error in proxy.\n\n")
+        print('Skipped')
         return redirect(url_for('index', new='true'))
         #return send_file('static/error.png', mimetype='image/png')
 
 
 @app.route('/')
 def index():
-    session['exception_urls'] = load_exception_urls()
     
     if 'current_feed' in session and request.args.get('new', 'false') == 'false':
         feed = session['current_feed']
         url = live_urls[feed]
     else:
-        while True:
-            feed = random.randint(0, len(live_urls) - 1)
-            url = live_urls[feed]
-            if url not in session['exception_urls']:
-                break
+
+        feed = random.randint(0, len(live_urls) - 1)
+        url = live_urls[feed]
         session['current_feed'] = feed
         
     ip = ''.join(url.split('//')[-1]).split(':')[0]
