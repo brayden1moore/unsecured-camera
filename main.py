@@ -79,6 +79,9 @@ def proxy(url):
 
 @app.route('/')
 def index():
+    with open('active_urls.pkl', 'rb') as f:
+        live_urls = pkl.load(f)
+    
     url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
     response = requests.get(url)
     exceptions = pkl.loads(BytesIO(response.content).read())
