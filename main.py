@@ -54,7 +54,7 @@ def proxy(url):
         clean_url = url.replace('proxy/', '')
         print('Cleaned URL:', clean_url)
         
-        if '.jpg' in clean_url:
+        if '.jpg' in clean_url and 'stream' not in clean_url:
             req = requests.get(f'{clean_url}', headers=headers, timeout=3)
             content_type = req.headers['content-type']
             return Response(req.content, content_type=content_type)
