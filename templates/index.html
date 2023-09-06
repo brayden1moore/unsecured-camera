@@ -177,7 +177,7 @@
         const img = new Image();
         img.onload = function() {
             feed.src = this.src;
-            setTimeout(refreshImage, 100);
+            setTimeout(refreshImage, 250);
         };
         
         img.onerror = function() {
