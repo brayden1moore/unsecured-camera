@@ -2,11 +2,12 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
+  <link rel="preload" href="{{ url_for('static', filename='map_populated.png') }}" as="image">
+  <link rel="preload" href="{{ url_for('static', filename='loading.gif') }}" as="image">
   <link rel="icon" type="image/png" href="https://images.squarespace-cdn.com/content/v1/64790f5777b5d772678cce83/6d71eaee-f825-4324-be9b-2def32469eac/Untitled+drawing+%2811%29.png?format=100w">
     <title>a random unsecured camera</title>
     <style>
         body {
-            transition: 0.3s;
             justify-content: left;
             background-color: black;
             padding-top: 3%;
@@ -68,15 +69,6 @@
             height: 65vh;
         }
 
-        .map-div {
-            padding: 1%;
-            position: relative;
-            width: 100%;
-            height: 50%;
-            margin-top: 3%;
-            margin-bottom: 3%;
-            box-sizing: border-box;
-        }
 
         .map {
             width: 100%; 
@@ -177,15 +169,6 @@
 
 
     <script>
-        // document.addEventListener("DOMContentLoaded", function() {
-        //    const feed = document.getElementById("feed");
-        //    feed.src = "{{ url_for('static', filename='loading.gif') }}"
-        //    setTimeout(function() {
-        //       const newUrl = "{{ url }}"; 
-        //        feed.src = newUrl;
-        //    }); 
-        //   });
-
 
       document.addEventListener("DOMContentLoaded", function() {
           const feed = document.getElementById("feed");
