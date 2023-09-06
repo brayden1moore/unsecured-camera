@@ -60,7 +60,7 @@ def proxy(url):
         
         content_type = req.headers['content-type']
         
-        return Response(req.iter_content(chunk_size=2*1024), content_type=content_type)
+        return Response(req.iter_content(chunk_size=512), content_type=content_type)
         
     except:
         print(f'Redirecting')
