@@ -179,18 +179,21 @@
 
     <script>
 
-      document.addEventListener("DOMContentLoaded", function() {
-          const feed = document.getElementById("feed");
-          feed.src = "{{ url_for('static', filename='loading.gif') }}";
-          
-          const newUrl = "{{ url }}";
-          
-          const img = new Image();
-          img.onload = function() {
-              feed.src = this.src;
-          };
-          img.src = newUrl;
-      });
+    document.addEventListener("DOMContentLoaded", function() {
+        const feed = document.getElementById("feed");
+        feed.src = "{{ url_for('static', filename='loading.gif') }}";
+        
+        const newUrl = "{{ url }}";
+        
+        const img = new Image();
+        img.onload = function() {
+            feed.src = this.src;
+        };
+        img.onerror = function() {
+            feed.src = "{{ url_for('static', filename='error.png') }}"; // You can set an error image here
+        };
+        img.src = newUrl;
+    });
 
     </script>
 </body>
