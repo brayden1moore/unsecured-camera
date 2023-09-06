@@ -91,11 +91,13 @@ def index():
     if 'current_feed' in session and request.args.get('new', 'false') == 'false':
         feed = session['current_feed']
     else:
-        feed = random.randint(0, len(live_urls) - 1)
+        while True:
+            feed = random.randint(0, len(live_urls) - 1)
+            url = live_urls[feed]
+            if url not in session['exception_urls']:
+                break
         session['current_feed'] = feed
         
-    #url = feed_dict[feed]['url']
-    url = live_urls[feed]
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_ip_info(ip)
     country = (pycountry.countries.get(alpha_2=info['country']).name).lower()
