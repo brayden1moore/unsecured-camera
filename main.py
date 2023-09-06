@@ -68,7 +68,7 @@ def proxy(url):
     clean_url = url.replace('proxy/', '')
     
     try:
-        print('\n\nREQUESTING URL:', clean_url)
+        logging.info(f"Sending request to: {clean_url}")
         req = requests.get(clean_url, headers=headers, stream=True, timeout=5)
         logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
         return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
@@ -77,7 +77,7 @@ def proxy(url):
         session['exception_urls'].append(url)
         save_exception_urls(session['exception_urls'])
         print('Added to exceptions:',session['exception_urls'])
-        logging.error(f"Error in proxy.")
+        logging.error(f"Error in proxy.\n\n")
         return send_file('static/error.png', mimetype='image/png')
 
 
@@ -106,7 +106,7 @@ def index():
     loc = info['loc']
     X, Y = latlon_to_pixel(info['loc'])
     proxy_url = 'proxy/' + url
-    
+    logging.info(f"Generated proxy URL: {proxy_url}")
     loc_link = f"https://www.google.com/maps/search/{loc}"
     ip_link = url
     return render_template('index.html', 
