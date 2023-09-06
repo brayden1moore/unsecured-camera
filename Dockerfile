@@ -25,4 +25,5 @@ WORKDIR $APP_HOME
 COPY --chown=user . $HOME/app
 
 # Run the web service on container startup.
-CMD exec gunicorn --bind 0.0.0.0:7860 --workers $(nproc) --threads 8 --timeout 120 main:app
+CMD exec gunicorn --bind 0.0.0.0:7860 --workers 9 --threads 16 --timeout 120 main:app
+
