@@ -41,9 +41,9 @@ def get_location(ip):
     location = reader.get(ip)
     geolite2.close()
     if location:
-        return {'country': location['country']['names']['en'],
-                'city': location['city']['names']['en'] if 'city' in location else '',
-                'region': location['subdivisions'][0]['names']['en'] if 'subdivisions' in location else '',
+        return {'country': location['country']['names']['en'] if 'country' in location else 'unknown country',
+                'city': location['city']['names']['en'] if 'city' in location else 'unknown city',
+                'region': location['subdivisions'][0]['names']['en'] if 'subdivisions' in location else 'unknown region',
                 'loc': str(location['location']['latitude']) + ',' + str(location['location']['longitude']),
                 'timezone': location['location']['time_zone'] if 'time_zone' in location['location'] else 'America/New_York'}
 
