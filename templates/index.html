@@ -176,7 +176,9 @@
             feed.src = this.src;
         };
         img.onerror = function() {
-            feed.src = "{{ url_for('static', filename='error.png') }}"; // You can set an error image here
+            // Set error image or reload with new=true
+            // feed.src = "{{ url_for('static', filename='error.png') }}";
+            window.location.href = "?new=true";
         };
         img.src = newUrl;
     });
