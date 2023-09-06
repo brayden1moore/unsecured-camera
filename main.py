@@ -18,6 +18,11 @@ with open('live_urls.pkl', 'rb') as f:
 with open('active_urls.pkl', 'rb') as f:
     live_urls = pkl.load(f)
 
+with open('exceptions.pkl', 'rb') as f:
+    exceptions = pkl.load(f)
+
+live_urls = [i for i in live_urls if i not in exceptions]
+
 def get_ip_info(ip_address):
     try:
         response = requests.get(f"http://ipinfo.io/{ip_address}/json")
@@ -62,6 +67,9 @@ def proxy(url):
         
     except:
         print(f'Redirecting')
+        exceptions.append(url)
+        with open('exceptions.pkl', 'wb') as f:
+            pkl.dump(exceptions, f)
         return send_file('static/error.png', mimetype='image/png')
 
 
@@ -74,7 +82,7 @@ def index():
         session['current_feed'] = feed
         
     #url = feed_dict[feed]['url']
-    url = live_urls[feed].replace('COUNTER',str(random.randint(0,100000)))
+    url = live_urls[feed]
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_ip_info(ip)
     country = (pycountry.countries.get(alpha_2=info['country']).name).lower()
