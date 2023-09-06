@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 app.secret_key = 'green-flounder'
 
-with open('video_urls.pkl', 'rb') as f:
+with open('active_urls.pkl', 'rb') as f:
     live_urls = pkl.load(f)
 
 def load_exception_urls():
