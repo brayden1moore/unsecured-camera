@@ -57,10 +57,14 @@ def proxy(url):
         if '.jpg' in clean_url and 'stream' not in clean_url:
             req = requests.get(f'{clean_url}', headers=headers, timeout=3)
             content_type = req.headers['content-type']
+            print("Status Code:", req.status_code)
+            print("Response Headers:", req.headers)
             return Response(req.content, content_type=content_type)
         else:
             req = requests.get(f'{clean_url}', headers=headers, stream=True, timeout=10)
             content_type = req.headers['content-type']
+            print("Status Code:", req.status_code)
+            print("Response Headers:", req.headers)
             return Response(req.iter_content(chunk_size=512), content_type=content_type)
  
     except:
