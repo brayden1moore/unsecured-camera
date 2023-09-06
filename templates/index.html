@@ -169,16 +169,21 @@
         feed.src = "{{ url_for('static', filename='loading.gif') }}";
         
         const newUrl = "{{ url }}";
+    
+        function refreshImage() {
+            img.src = newUrl + '?t=' + new Date().getTime();
+        }
         
         const img = new Image();
         img.onload = function() {
             feed.src = this.src;
+            setTimeout(refreshImage, 500);
         };
+        
         img.onerror = function() {
-            // Set error image or reload with new=true
-            // feed.src = "{{ url_for('static', filename='error.png') }}";
             window.location.href = "?new=true";
         };
+    
         img.src = newUrl;
     });
     </script>
