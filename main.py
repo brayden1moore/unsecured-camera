@@ -15,6 +15,9 @@ with open('video_dict.pkl', 'rb') as f:
 with open('live_urls.pkl', 'rb') as f:
     live_urls = pkl.load(f)
 
+with open('active_urls.pkl', 'rb') as f:
+    live_urls = pkl.load(f)
+
 def get_ip_info(ip_address):
     try:
         response = requests.get(f"http://ipinfo.io/{ip_address}/json")
