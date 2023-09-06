@@ -80,6 +80,7 @@ def proxy(url):
     except requests.exceptions.RequestException as e:
         session['exception_urls'].append(url)
         save_exception_urls(session['exception_urls'])
+        print('Added to exceptions:',session['exception_urls'])
         logging.error(f"Error in proxy: {e}")
         return send_file('static/error.png', mimetype='image/png')
 
@@ -126,4 +127,4 @@ def index():
                                Y=Y)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='7860', debug=True)
+    app.run(host='0.0.0.0', port='7860')
