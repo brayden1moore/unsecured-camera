@@ -35,6 +35,18 @@ def get_ip_info(ip_address):
     except Exception as e:
         return {"error": str(e)}
 
+from geolite2 import geolite2
+def get_location(ip):
+    reader = geolite2.reader()
+    location = reader.get(ip)
+    geolite2.close()
+    if location and 'location' in location:
+        return {'country': location['country']['names']['en'],
+                'city': location['city']['names']['en'],
+                'region': location['subdivisions'][0]['names']['en'] if len(location['subdivisions'])>0 else '',
+                'loc': str(location['location']['longitude']) + ',' + str(location['location']['latitude']),
+                'timezone': location['location']['time_zone']}
+
 def latlon_to_pixel(loc):
     latitude = float(loc.split(',')[0])
     longitude = float(loc.split(',')[1])
@@ -87,10 +99,9 @@ def index():
         session['current_feed'] = feed
         
     ip = ''.join(url.split('//')[-1]).split(':')[0]
-    info = get_ip_info(ip)
-    country = (pycountry.countries.get(alpha_2=info['country']).name).lower()
+    info = get_location(ip)
+    country = info['country']
     name = (info['city'] + ", " + info['region'] + ", " + country).lower()
-    org = info['org'].lower()
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
     time = time.strftime("%I:%M:%S %p")
@@ -109,7 +120,6 @@ def index():
                                timezone=timezone,
                                ip=ip, 
                                ip_link=ip_link,
-                               org=org, 
                                loc=loc, 
                                loc_link=loc_link, 
                                X=X, 
