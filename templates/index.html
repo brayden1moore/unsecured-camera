@@ -172,9 +172,20 @@
         feed.src = "{{ url_for('static', filename='loading.gif') }}";
         
         const newUrl = "{{ url }}";
-    
+        
         function refreshImage() {
-            img.src = newUrl + '?t=' + new Date().getTime();
+            let xhr = new XMLHttpRequest();
+            xhr.open('HEAD', newUrl + '?t=' + new Date().getTime(), true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        if (xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
+                            img.src = newUrl + '?t=' + new Date().getTime();
+                        }
+                    }
+                }
+            };
+            xhr.send();
         }
         
         const img = new Image();
@@ -186,7 +197,7 @@
         img.onerror = function() {
             window.location.href = "?new=true";
         };
-    
+        
         img.src = newUrl;
     });
 
