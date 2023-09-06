@@ -39,9 +39,6 @@ from urllib.parse import urlparse, parse_qs
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
-    url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
-    response = requests.get(url)
-    exceptions = pkl.loads(BytesIO(response.content).read())
     
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -67,27 +64,11 @@ def proxy(url):
         
     except:
         print(f'Redirecting')
-        exceptions.append(url)
-        byte_stream = BytesIO()
-        pkl.dump(exceptions, byte_stream)
-        byte_stream.seek(0)
-        url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
-        response = requests.put(url, data=byte_stream.read())
-        print(response)
         return send_file('static/error.png', mimetype='image/png')
 
 
 @app.route('/')
 def index():
-    with open('active_urls.pkl', 'rb') as f:
-        live_urls = pkl.load(f)
-    
-    url = 'https://storage.googleapis.com/bmllc-data-bucket/exceptions.pkl'
-    response = requests.get(url)
-    exceptions = pkl.loads(BytesIO(response.content).read())
-    print(exceptions)
-    
-    live_urls = [i for i in live_urls if i not in exceptions]
     
     if 'current_feed' in session and request.args.get('new', 'false') == 'false':
         feed = session['current_feed']
