@@ -63,7 +63,7 @@ def proxy(url):
     
     try:
         logging.info(f"Sending request to: {clean_url}")
-        req = requests.get(clean_url, headers=headers, stream=True, timeout=5)
+        req = requests.get(clean_url, headers=headers, stream=True, timeout=7)
         logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
         return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
     
@@ -73,7 +73,8 @@ def proxy(url):
         save_exception_urls(session['exception_urls'])
         print('Added to exceptions:',len(session['exception_urls']))
         logging.error(f"Error in proxy.\n\n")
-        return send_file('static/error.png', mimetype='image/png')
+        return redirect(url_for('index', new='true'))
+        #return send_file('static/error.png', mimetype='image/png')
 
 
 @app.route('/')
