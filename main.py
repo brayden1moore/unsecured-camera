@@ -6,6 +6,9 @@ import pycountry
 import datetime as dt
 import pytz
 from io import BytesIO
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 app.secret_key = 'green-flounder'
@@ -51,24 +54,16 @@ def proxy(url):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
     }
     try:
-        clean_url = url.replace('proxy/', '')
-        print('Cleaned URL:', clean_url)
-        
         if '.jpg' in clean_url and 'stream' not in clean_url:
-            req = requests.get(f'{clean_url}', headers=headers, timeout=3)
-            content_type = req.headers['content-type']
-            print("Status Code:", req.status_code)
-            print("Response Headers:", req.headers)
-            return Response(req.content, content_type=content_type)
+            req = requests.get(clean_url, headers=headers, timeout=3)
+            logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
+            return Response(req.content, content_type=req.headers['content-type'])
         else:
-            req = requests.get(f'{clean_url}', headers=headers, stream=True, timeout=10)
-            content_type = req.headers['content-type']
-            print("Status Code:", req.status_code)
-            print("Response Headers:", req.headers)
-            return Response(req.iter_content(chunk_size=512), content_type=content_type)
- 
-    except:
-        print(f'Redirecting')
+            req = requests.get(clean_url, headers=headers, stream=True, timeout=10)
+            logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
+            return Response(req.iter_content(chunk_size=512), content_type=req.headers['content-type'])
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Error in proxy: {e}")
         return send_file('static/error.png', mimetype='image/png')
 
 
