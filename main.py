@@ -70,13 +70,13 @@ def proxy(url):
     
     try:
         if '.jpg' in clean_url and 'stream' not in clean_url:
-            req = requests.get(clean_url, headers=headers, timeout=3)
+            req = requests.get(clean_url, headers=headers, timeout=10)
             logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
             return Response(req.content, content_type=req.headers['content-type'])
         else:
-            req = requests.get(clean_url, headers=headers, stream=True, timeout=10)
+            req = requests.get(clean_url, headers=headers, stream=True, timeout=15)
             logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
-            return Response(req.iter_content(chunk_size=512), content_type=req.headers['content-type'])
+            return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
     except:
         session['exception_urls'].append(url)
         save_exception_urls(session['exception_urls'])
