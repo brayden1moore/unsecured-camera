@@ -7,6 +7,7 @@ import datetime as dt
 import pytz
 from io import BytesIO
 import logging
+import os 
 
 logging.basicConfig(level=logging.INFO)
 
@@ -22,6 +23,16 @@ with open('live_urls.pkl', 'rb') as f:
 with open('active_urls.pkl', 'rb') as f:
     live_urls = pkl.load(f)
 
+def load_exception_urls():
+    url = os.environ['EXCEPTIONS']
+    response = requests.get(url)
+    return pkl.loads(response.content)
+
+def save_exception_urls(exception_urls):
+    url = os.environ['EXCEPTIONS']
+    data = pkl.dumps(exception_urls)
+    requests.put(url, data=data)
+    
 def get_ip_info(ip_address):
     try:
         response = requests.get(f"http://ipinfo.io/{ip_address}/json")
@@ -67,12 +78,15 @@ def proxy(url):
             logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
             return Response(req.iter_content(chunk_size=512), content_type=req.headers['content-type'])
     except requests.exceptions.RequestException as e:
+        session['exception_urls'].append(url)
+        save_exception_urls(session['exception_urls'])
         logging.error(f"Error in proxy: {e}")
         return send_file('static/error.png', mimetype='image/png')
 
 
 @app.route('/')
 def index():
+    session['exception_urls'] = load_exception_urls()
     
     if 'current_feed' in session and request.args.get('new', 'false') == 'false':
         feed = session['current_feed']
