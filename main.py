@@ -43,9 +43,9 @@ def get_location(ip):
     if location and 'location' in location:
         return {'country': location['country']['names']['en'],
                 'city': location['city']['names']['en'] if 'city' in location else '',
-                'region': location['subdivisions'][0]['names']['en'] if len(location['subdivisions'])>0 else '',
+                'region': location['subdivisions'][0]['names']['en'] if 'subdivisions' in location else '',
                 'loc': str(location['location']['longitude']) + ',' + str(location['location']['latitude']),
-                'timezone': location['location']['time_zone']}
+                'timezone': location['location']['time_zone'] if 'time_zone' in location else ''}
 
 def latlon_to_pixel(loc):
     latitude = float(loc.split(',')[0])
@@ -99,6 +99,7 @@ def index():
         session['current_feed'] = feed
         
     ip = ''.join(url.split('//')[-1]).split(':')[0]
+    print('IP:',ip)
     info = get_location(ip)
     country = info['country']
     name = (info['city'] + ", " + info['region'] + ", " + country).lower()
