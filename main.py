@@ -45,8 +45,8 @@ def get_location(ip):
         return {'country': location['country']['names']['en'] if 'country' in location else 'unknown country',
                 'city': location['city']['names']['en'] if 'city' in location else 'unknown city',
                 'region': location['subdivisions'][0]['names']['en'] if 'subdivisions' in location else 'unknown region',
-                'loc': str(location['location']['latitude']) + ',' + str(location['location']['longitude']),
-                'timezone': location['location']['time_zone'] if 'time_zone' in location['location'] else 'America/New_York'}
+                'loc': str(location['location']['latitude']) + ',' + str(location['location']['longitude']) if 'location' in location else '0,0',
+                'timezone': location['location']['time_zone'] if 'location' in location and 'time_zone' in location['location'] else 'America/New_York'}
     else:
         return {'country': 'unknown country',
                 'city': 'unknown city',
