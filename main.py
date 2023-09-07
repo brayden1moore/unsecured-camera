@@ -99,12 +99,8 @@ def index():
         feed = session['current_feed']
         url = live_urls[feed]
     else:
-        while True:
-            feed = random.randint(0, len(live_urls) - 1)
-            url = live_urls[feed]
-            response = requests.get(url)
-            if response.status_code == 200:
-                break
+        feed = random.randint(0, len(live_urls) - 1)
+        url = live_urls[feed]
         session['current_feed'] = feed
         
     ip = ''.join(url.split('//')[-1]).split(':')[0]
