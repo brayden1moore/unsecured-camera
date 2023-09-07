@@ -18,6 +18,9 @@ app.secret_key = 'green-flounder'
 with open('video_urls.pkl', 'rb') as f:
     live_urls = pkl.load(f)
 
+with open('owner_dict.pkl', 'rb') as f:
+    owner_dict = pkl.load(f)
+
 def load_exception_urls():
     url = os.environ['EXCEPTIONS']
     response = requests.get(url)
@@ -119,6 +122,10 @@ def index():
     logging.info(f"Generated proxy URL: {proxy_url}")
     loc_link = f"https://www.google.com/maps/search/{loc}"
     ip_link = url
+    try:
+        owner = owner_dict[ip]
+    except:
+        owner = 'unknown'
     return render_template('index.html', 
                                name=name, 
                                url=proxy_url, 
@@ -130,6 +137,7 @@ def index():
                                ip_link=ip_link,
                                loc=loc, 
                                loc_link=loc_link, 
+                               owner=owner,
                                X=X, 
                                Y=Y)
 
