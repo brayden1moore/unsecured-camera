@@ -17,6 +17,7 @@ app.secret_key = 'green-flounder'
 
 with open('video_urls.pkl', 'rb') as f:
     live_urls = pkl.load(f)
+    live_urls = [i for i in live_urls if i!= 'http://2.40.36.158:8084/img/video.mjpeg']
 
 with open('owner_dict.pkl', 'rb') as f:
     owner_dict = pkl.load(f)
