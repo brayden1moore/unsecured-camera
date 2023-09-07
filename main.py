@@ -95,14 +95,16 @@ def proxy(url):
 
 @app.route('/')
 def index():
-    
     if 'current_feed' in session and request.args.get('new', 'false') == 'false':
         feed = session['current_feed']
         url = live_urls[feed]
     else:
-
-        feed = random.randint(0, len(live_urls) - 1)
-        url = live_urls[feed]
+        while True:
+            feed = random.randint(0, len(live_urls) - 1)
+            url = live_urls[feed]
+            response = requests.get(url)
+            if response.status_code == 200:
+                break
         session['current_feed'] = feed
         
     ip = ''.join(url.split('//')[-1]).split(':')[0]
