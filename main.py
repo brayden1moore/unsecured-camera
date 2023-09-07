@@ -8,6 +8,7 @@ import pytz
 from io import BytesIO
 import logging
 import os 
+import time
 
 logging.basicConfig(level=logging.INFO)
 
@@ -81,16 +82,17 @@ def proxy(url):
     clean_url = url.replace('proxy/', '')
     
     try:
+        import time
+        start = time.time()
         logging.info(f"Sending request to: {clean_url}")
-        req = requests.get(clean_url, headers=headers, stream=True, timeout=2)
-        logging.info(f"Status Code: {req.status_code}, Response Headers: {req.headers}")
+        req = requests.get(clean_url, headers=headers, stream=True, timeout=1)
+        logging.info(f"TIME: {time.time()-start}, Status Code: {req.status_code}, Response Headers: {req.headers}")
         return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
     
     except Exception as e:
         logging.error(f"Error in proxy: {str(e)}")
         print('Skipped')
         return redirect(url_for('index', new='true'))
-        #return send_file('static/error.png', mimetype='image/png')
 
 
 @app.route('/')
