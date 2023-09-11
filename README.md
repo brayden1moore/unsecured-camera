@@ -1,6 +1,6 @@
 ---
 title: A Random Unsecured Camera
-emoji: 🌍
+emoji: 🌍📷
 colorFrom: gray
 colorTo: yellow
 sdk: docker
