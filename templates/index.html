@@ -196,7 +196,7 @@
         img.onload = function() {
             feed.src = this.src;
             setTimeout(refreshImage, 1000);
-            country.text = "{{ country }}"
+            country.textContent = "{{ country }}"
         };
         
         img.onerror = function() {
