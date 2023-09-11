@@ -124,7 +124,7 @@
 <body style="background-color: black;">
     <div class="outer-container">
         <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;"> a random unsecured camera in</p>
-        <h1 id="country-name" style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> attempting to connect...</h1>
+        <h1 id="country" style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> attempting to connect...</h1>
                 <div class="flex-container">
                     <img id="feed" class="feed" src="" />
                     <div class="info">
@@ -172,7 +172,7 @@
         const feed = document.getElementById("feed");
         feed.src = "{{ url_for('static', filename='loading.gif') }}";
         
-        const country = document.getElementById("country-name");
+        const country = document.getElementById("country");
         country.text = "attempting to connect..."
       
         const newUrl = "{{ url }}";
