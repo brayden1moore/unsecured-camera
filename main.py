@@ -89,7 +89,7 @@ def proxy(url):
         import time
         start = time.time()
         logging.info(f"Sending request to: {clean_url}")
-        req = requests.get(clean_url, headers=headers, stream=True, timeout=3)
+        req = requests.get(clean_url, headers=headers, stream=True, timeout=2)
         logging.info(f"TIME: {time.time()-start}, Status Code: {req.status_code}, Response Headers: {req.headers}")
         return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
     
