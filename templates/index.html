@@ -124,7 +124,7 @@
 <body style="background-color: black;">
     <div class="outer-container">
         <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;"> a random unsecured camera in</p>
-        <h1 style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> {{ country }}</h1>
+        <h1 id="country-name" style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> {{ country }}</h1>
                 <div class="flex-container">
                     <img id="feed" class="feed" src="" />
                     <div class="info">
@@ -172,6 +172,9 @@
         const feed = document.getElementById("feed");
         feed.src = "{{ url_for('static', filename='loading.gif') }}";
         
+        const country = document.getElementById("feed");
+        country.text = "attempting to connect..."
+      
         const newUrl = "{{ url }}";
         
         function refreshImage() {
@@ -193,6 +196,7 @@
         img.onload = function() {
             feed.src = this.src;
             setTimeout(refreshImage, 1000);
+            country.text = "{{ country }}"
         };
         
         img.onerror = function() {
