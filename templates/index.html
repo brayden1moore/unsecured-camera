@@ -50,7 +50,7 @@
             justify-content: left;
             max-width: 85vw;
         }
-        .feed {
+        feed-div {
             padding: 1%;
             border-style: solid;
             border-width: 2px;
@@ -128,7 +128,10 @@
         <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;"> a random unsecured camera in</p>
         <h1 id="country" style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> searching...</h1>
                 <div class="flex-container">
-                    <img id="feed" class="feed" src="" />
+                    <div id="feed-div">
+                      <img id="feed" class="feed" src="" />
+                    </div>
+                      
                     <div class="info">
 
                       <a href="{{ ip_link }}" target="_blank"> <h3 style="margin:0; border-bottom: 2px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h3></a>
