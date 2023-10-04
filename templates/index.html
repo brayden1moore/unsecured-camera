@@ -218,6 +218,8 @@
         img.onload = function() {
             old = newUrl;
             feed.src = this.src;
+            feed.style.width = "100%";
+            feed.style.height = "100%";
             feed.style.opacity = "1";
             setTimeout(refreshImage, 1000);
             country.textContent = "{{ country }}"
