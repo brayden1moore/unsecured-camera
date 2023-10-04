@@ -170,7 +170,7 @@
                         </a>
                       </div>
                       
-                      <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">
+                      <p id="info-text" style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">
                           owner: {{ owner }}<br>
                           ip: {{ ip }}<br>  
                           lat, lon: {{ loc }}<br>
@@ -203,7 +203,10 @@
         feed.style.height = "100px";
         feed.src = loadingGif;
         feed.style.opacity = "0.5";
-        
+
+        const infoText = document.getElementById("info-text");
+        infoText.style.opacity = "0";
+      
         const country = document.getElementById("country");
       
         const newUrl = "{{ url }}";
@@ -230,6 +233,10 @@
             feed.style.width = "100%";
             feed.style.height = "100%";
             feed.style.opacity = "1";
+
+            const infoText = document.getElementById("info-text");
+            infoText.style.opacity = "1";
+          
             setTimeout(refreshImage, 1000);
             country.textContent = "{{ country }}"
         };
