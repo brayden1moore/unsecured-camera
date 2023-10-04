@@ -181,6 +181,8 @@
 
 
     <script>
+    let oldUrl = "{{ url_for('static', filename='loading.gif') }}";
+      
     document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
         feed.style.opacity = "0.5";
@@ -207,6 +209,7 @@
         
         const img = new Image();
         img.onload = function() {
+            old = newUrl;
             feed.src = this.src;
             feed.style.opacity = "1";
             setTimeout(refreshImage, 1000);
