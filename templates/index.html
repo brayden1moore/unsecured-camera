@@ -181,11 +181,13 @@
 
 
     <script>
-    let oldUrl = "{{ url_for('static', filename='loading.gif') }}";
-      
+    let loadingGif = "{{ url_for('static', filename='loading.gif') }}";
+    let currentFeed;
     document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
-        feed.src = oldUrl;
+        feed.src = loadingGif;
+        feed.height = "225px";
+        feed.width = "225px";
         feed.style.opacity = "0.5";
         
         const country = document.getElementById("country");
@@ -212,6 +214,8 @@
         img.onload = function() {
             old = newUrl;
             feed.src = this.src;
+            feed.height = "auto";
+            feed.width = "100%";
             feed.style.opacity = "1";
             setTimeout(refreshImage, 1000);
             country.textContent = "{{ country }}"
