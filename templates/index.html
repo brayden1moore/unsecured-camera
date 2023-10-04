@@ -138,7 +138,12 @@
 <body style="background-color: black;">
     <div class="outer-container">
             <div class="flex-container">
-                      
+
+                    <div id="feed-div">
+                      <img id="feed" class="feed" src="{{ url_for('static', filename='loading.gif') }}" />
+                    </div>
+
+              
                     <div class="info">
                       <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;"> a random unsecured camera in</p>
                       <h1 id="country" style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> searching...</h1>        
@@ -174,10 +179,6 @@
                       <p style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-top: 3%;">
                         a brayden moore website
                       </p>
-                    </div>
-
-                      <div id="feed-div">
-                      <img id="feed" class="feed" src="{{ url_for('static', filename='loading.gif') }}" />
                     </div>
 
                 </div>
