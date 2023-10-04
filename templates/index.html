@@ -137,7 +137,7 @@
         <h1 id="country" style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> searching...</h1>
                 <div class="flex-container">
                     <div id="feed-div">
-                      <img id="feed" class="feed" src="{{ url_for('static', filename='loading.gif') }}" />
+                      <img id="feed" class="feed" src="" />
                     </div>
                       
                     <div class="info">
@@ -183,7 +183,7 @@
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
-        feed.style.opacity = "0.5"; //"{{ url_for('static', filename='loading.gif') }}";
+        feed.style.opacity = "0.5";
         
         const country = document.getElementById("country");
         country.text = "attempting to connect..."
