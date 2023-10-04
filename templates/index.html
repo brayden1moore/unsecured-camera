@@ -184,8 +184,8 @@
     let oldUrl = "{{ url_for('static', filename='loading.gif') }}";
       
     document.addEventListener("DOMContentLoaded", function() {
-        feed.src = oldUrl;
         const feed = document.getElementById("feed");
+        feed.src = oldUrl;
         feed.style.opacity = "0.5";
         
         const country = document.getElementById("country");
