@@ -54,8 +54,9 @@
         #feed-div {
             display: flex;
             justify-content: center;
-            align-items: center;  
-            width: 60%;
+            align-items: center; 
+            height: 1000px;
+            width: 500px;
             position: relative;
             margin-right: 3%;
             margin-bottom: 3%;
@@ -186,8 +187,6 @@
     document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
         feed.src = loadingGif;
-        feed.height = "225px";
-        feed.width = "225px";
         feed.style.opacity = "0.5";
         
         const country = document.getElementById("country");
@@ -214,8 +213,6 @@
         img.onload = function() {
             old = newUrl;
             feed.src = this.src;
-            feed.width = "100%";
-            feed.height = "100%";
             feed.style.opacity = "1";
             setTimeout(refreshImage, 1000);
             country.textContent = "{{ country }}"
