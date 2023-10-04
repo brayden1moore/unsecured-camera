@@ -243,6 +243,9 @@
         };
         
         img.onerror = function() {
+            feed.style.width = "80px";
+            feed.style.height = "50px";
+            feed.src = loadingGif;
             window.location.href = "?new=true";
         };
         
