@@ -54,17 +54,21 @@
         #feed-div {
             display: flex;
             justify-content: center;
-            align-items: center;          
+            align-items: center;  
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            position: relative;
             margin-right: 3%;
             margin-bottom: 3%;
-            width: 60%; 
-            height: 69%;
         }
       .feed {
         transition: 0.3s ease;
-        height: 100%;
-        width: auto;
-        max-width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        object-fit: contain;
       }
         .map {
             width: 100%; 
