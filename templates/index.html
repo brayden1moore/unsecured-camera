@@ -323,6 +323,43 @@
           countryElement.textContent = "connecting...";
       }
   });
+
+
+  // Fullscreen
+  document.addEventListener("DOMContentLoaded", function() {
+    const feed = document.getElementById("feed");
+
+    let isFullscreen = false;  // To track fullscreen state
+
+    feed.addEventListener("click", function() {
+        if (!isFullscreen) {
+            if (this.requestFullscreen) {
+                this.requestFullscreen();
+            } else if (this.mozRequestFullScreen) {
+                this.mozRequestFullScreen();
+            } else if (this.webkitRequestFullscreen) {
+                this.webkitRequestFullscreen();
+            } else if (this.msRequestFullscreen) {
+                this.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    });
+
+    // Listen for fullscreen changes to update isFullscreen
+    document.addEventListener("fullscreenchange", function() {
+          isFullscreen = !isFullscreen;
+      });
+  });
       
     </script>
 </body>
