@@ -203,7 +203,7 @@
               
                     <div class="info" id="info">
                       <h1 id="country" style="color:rgb(53, 53, 53); margin-top: 10px; font-family: 'Helvetica'; font-weight: 50; margin-bottom: 10px;"> searching...</h1>        
-                      <a href="{{ ip_link }}" target="_blank"> <h3><span id="location-name">{{ page_title }}</span</h3></a>
+                      <a href="{{ ip_link }}" target="_blank"> <h3><span id="location-name" class="js-target">{{ page_title }}</span</h3></a>
 
                       <div style="display: flex; margin-top: 22px; margin-bottom: 0%;">
                         <a href="?new=true" style="margin-right: 10px; display: inline-block;">
@@ -259,8 +259,8 @@
         const infoText = document.getElementById("info-text");
         infoText.style.opacity = "0";
       
-        const locationName = document.getElementById("location-name");
-        locationName.textContent = "{{ name }}";
+        const locationName = document.querySelector('.js-target');;
+        locationName.textContent = "{{ page_title }}";
       
         const newUrl = "{{ url }}";
         
@@ -288,6 +288,7 @@
             old = newUrl;
             setTimeout(() => {
               feed.src = this.src;
+              locationName.textContent = "{{ name }}";
               feed.style.width = "100%";
               feed.style.height = "70%";
               feed.style.opacity = "1";
