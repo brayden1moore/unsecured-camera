@@ -112,6 +112,7 @@ def index():
     
     if id:
         url = live_urls[int(id)]
+        feed = id
         session['current_feed'] = id
     
     id = feed
