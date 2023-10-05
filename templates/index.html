@@ -247,6 +247,7 @@
         img.onload = function() {
   
             old = newUrl;
+            feed.src = this.src;
             setTimeout(() => {
               feed.style.width = "100%";
               feed.style.height = "70%";
