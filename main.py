@@ -120,7 +120,8 @@ def index():
     print('IP:',ip)
     info = get_location(ip)
     country = info['country'].lower()
-    name = (info['city'] + ", " + info['region'] + ", " + country).lower()
+    name = (info['city'] + ", " + info['region']).lower()
+    page_title = (info['city'] + ", " + info['region'] + ", " + country).lower()
     timezone = pytz.timezone(info['timezone'])
     time = dt.datetime.now(timezone)
     time = time.strftime("%I:%M:%S %p")
@@ -148,7 +149,8 @@ def index():
                                owner=owner,
                                X=X, 
                                Y=Y,
-                               id=id)
+                               id=id,
+                               page_title=page_title)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860')
