@@ -326,12 +326,11 @@
 
 
   // Fullscreen
-  document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
     const feed = document.getElementById("feed");
+    let isFullscreen = false; 
 
-    let isFullscreen = false;  // To track fullscreen state
-
-    feed.addEventListener("click", function() {
+    function toggleFullScreen() {
         if (!isFullscreen) {
             if (this.requestFullscreen) {
                 this.requestFullscreen();
@@ -353,13 +352,16 @@
                 document.msExitFullscreen();
             }
         }
-    });
+    }
 
-    // Listen for fullscreen changes to update isFullscreen
+    feed.addEventListener("click", toggleFullScreen);
+    feed.addEventListener("touchstart", toggleFullScreen);
+
     document.addEventListener("fullscreenchange", function() {
-          isFullscreen = !isFullscreen;
-      });
-  });
+        isFullscreen = !isFullscreen;
+    });
+});
+
       
     </script>
 </body>
