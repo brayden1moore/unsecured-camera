@@ -113,7 +113,7 @@ def index():
     if request.args.get('id'):
         print(request.args.get('id'))
         url = live_urls[int(request.args.get('id'))]
-        session['current_feed'] = feed
+        session['current_feed'] = request.args.get('id')
     
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
