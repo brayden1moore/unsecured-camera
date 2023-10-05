@@ -187,7 +187,7 @@
                     </div>
 
               
-                    <div class="info">
+                    <div class="info" id="info">
                       <h1 id="country" style="color:rgb(83, 83, 83); margin-top: 1%; font-family: 'Helvetica'; font-weight: 50; margin-bottom: 3%;"> searching...</h1>        
                       <a href="{{ ip_link }}" target="_blank"> <h3 style="border-bottom: 2px solid yellow; color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">{{ name }}</h3></a>
 
@@ -240,6 +240,7 @@
         feed.src = loadingGif;
         feed.style.opacity = "0.2";
 
+        const infoDiv = document.getElementById("info");
         const infoText = document.getElementById("info-text");
         infoText.style.opacity = "0";
       
@@ -264,13 +265,14 @@
         
         const img = new Image();
         img.onload = function() {
-  
+            infoDiv.style.opacity = "0";
             old = newUrl;
             setTimeout(() => {
               feed.src = this.src;
               feed.style.width = "100%";
               feed.style.height = "70%";
               feed.style.opacity = "1";
+              infoDiv.style.opacity = "1";
             }, 100);
 
             const infoText = document.getElementById("info-text");
