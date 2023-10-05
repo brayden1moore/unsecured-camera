@@ -58,7 +58,7 @@
         }
         #feed-div {
             display: flex;
-            align-items: top; 
+            justify-content: right; 
             width: 90%;
             height: 90%;
             position: relative;
@@ -126,6 +126,7 @@
             }
             
             #feed-div {
+                justify-content: left;
                 width: 100%;
                 max-height: 45%;
                 margin-right: 0;
@@ -226,7 +227,7 @@
         
         const img = new Image();
         img.onload = function() {
-          errer
+  
             old = newUrl;
             feed.src = this.src;
             feed.style.width = "100%";
