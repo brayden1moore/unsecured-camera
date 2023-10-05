@@ -243,8 +243,8 @@
         img.onload = function() {
   
             old = newUrl;
-            feed.src = this.src;
             setTimeout(() => {
+              feed.src = this.src;
               feed.style.width = "100%";
               feed.style.height = "70%";
               feed.style.opacity = "1";
