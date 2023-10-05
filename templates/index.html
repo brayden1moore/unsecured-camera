@@ -263,7 +263,16 @@
             feed.style.width = "80px";
             feed.style.height = "50px";
             feed.src = loadingGif;
-            window.location.href = "?new=true";
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const countryElement = document.getElementById("country");
+            if (urlParams.get('new') === 'false') {
+                countryElement.textContent = "couldn't connect.";
+            }
+            else {
+                window.location.href = "?new=true";
+            }
+
         };
         
         img.src = newUrl;
