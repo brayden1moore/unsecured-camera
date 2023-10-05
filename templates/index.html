@@ -2,7 +2,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-  <link rel="preload" href="{{ url_for('static', filename='map_populated.png') }}" as="image">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="preload" href="{{ url_for('static', filename='eye.gif') }}" as="image">
   <link rel="icon" type="image/png" href="https://images.squarespace-cdn.com/content/v1/64790f5777b5d772678cce83/6d71eaee-f825-4324-be9b-2def32469eac/Untitled+drawing+%2811%29.png?format=100w">
     <title>a random unsecured camera</title>
@@ -104,9 +104,23 @@
             color:rgb(83, 83, 83);
             transition: 0.5s ease;
         }
-        #tag {
-             color:yellow;
+        .tag {
+            font-family: 'Helvetica'; 
+            font-weight: 50;
+            margin: auto;
+            color:yellow;
         }
+
+        #share {
+          margin: auto;
+          margin-left: 10px;
+          color: yellow;
+          transition: 0.3s ease;
+        }
+        #share:hover {
+          opacity: 0.5;
+        }
+
         @media only screen and (orientation: portrait) {
             body {
               margin-left: auto;
@@ -140,8 +154,7 @@
             .info {
                 width: 90%;
                 height: 65%;
-            }
-
+              }
         }
     </style>
 </head>
@@ -170,6 +183,8 @@
                             refresh
                           </button>
                         </a>
+                        <i id="share" class="fa-solid fa-link" data-id="{{ id }}"></i>
+                        <p id="copied" class="tag" style="visibility: hidden;">copied</p>
                       </div>
                       
                       <p id="info-text" style="color:rgb(83, 83, 83); font-family: 'Helvetica'; font-weight: 50;">
@@ -178,7 +193,7 @@
                           lat, lon: {{ loc }}<br>
                           time: <span id="time"></span><br><br>
                           
-                        <span id="tag">a brayden moore website<br></span>thanks for visiting
+                        <span class="tag">a brayden moore website<br></span>thanks for visiting
                         </p>
 
                       <!--
@@ -195,6 +210,8 @@
 
 
     <script>
+
+    // Handle feed load and refresh
     let loadingGif = "{{ url_for('static', filename='eye.gif') }}";
     let currentFeed;
     document.addEventListener("DOMContentLoaded", function() {
@@ -252,6 +269,7 @@
         img.src = newUrl;
     });
 
+    // Time count
     document.addEventListener("DOMContentLoaded", function() {
       const timezone = "{{ timezone }}"; 
       setInterval(() => {
@@ -268,6 +286,34 @@
       }, 200);
     });
 
+    // Copy link
+    document.addEventListener("DOMContentLoaded", function() {
+      const shareIcon = document.getElementById("share");
+      const copiedText = document.getElementById("copied");
+
+      shareIcon.addEventListener("click", function() {
+          const id = this.getAttribute("data-id");
+          const urlToCopy = `${window.location.origin}/?new=false&id=${id}`;
+          
+          navigator.clipboard.writeText(urlToCopy).then(() => {
+              console.log("URL copied to clipboard");
+              shareIcon.className = "fa-solid fa-check";
+              //copiedText.style.visibility = "visible";
+          }).catch(err => {
+              console.log("Could not copy text: ", err);
+          });
+      });
+  });
+
+  // Connect vs search
+  document.addEventListener("DOMContentLoaded", function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const countryElement = document.getElementById("country");
+
+      if (urlParams.get('new') === 'false') {
+          countryElement.textContent = "connecting...";
+      }
+  });
       
     </script>
 </body>
