@@ -101,7 +101,7 @@ def proxy(url):
 
 @app.route('/')
 def index():
-    id = 0
+    id = request.args.get('id')
     if 'current_feed' in session and request.args.get('new', 'false') == 'false':
         feed = session['current_feed']
         url = live_urls[feed]
@@ -110,10 +110,9 @@ def index():
         url = live_urls[feed]
         session['current_feed'] = feed
     
-    if request.args.get('id'):
-        print(request.args.get('id'))
-        url = live_urls[int(request.args.get('id'))]
-        session['current_feed'] = request.args.get('id')
+    if id:
+        url = live_urls[int(id)]
+        session['current_feed'] = id
     
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
