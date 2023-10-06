@@ -433,17 +433,24 @@
     const infoText = document.getElementById('info-text');
     const additionalInfo = document.getElementById('additional-info');
     const showMore = document.getElementById('show-more');
-    
+  
+    // Initial setup
+    additionalInfo.style.height = '0';
+    additionalInfo.style.overflow = 'hidden';
+    additionalInfo.style.transition = 'height 0.3s ease-in-out';
+  
     infoText.addEventListener('click', function() {
-      if (additionalInfo.classList.contains('expanded')) {
-        additionalInfo.classList.remove('expanded');
-        showMore.style.display = 'inline';
-      } else {
-        additionalInfo.classList.add('expanded');
+      if (additionalInfo.style.height === '0px') {
+        const scrollHeight = additionalInfo.scrollHeight;
+        additionalInfo.style.height = `${scrollHeight}px`;
         showMore.style.display = 'none';
+      } else {
+        additionalInfo.style.height = '0';
+        showMore.style.display = 'inline';
       }
     });
   });
+
 
 
       
