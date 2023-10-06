@@ -278,6 +278,7 @@
         infoText.style.opacity = "0";
       
         const locationName = document.getElementById('location-name');
+        const countryElement = document.getElementById("country");
         locationName.textContent = "{{ page_title|safe }}";
       
         const newUrl = decodeURIComponent("{{ url|safe }}");
@@ -323,7 +324,6 @@
         img.onerror = function() {
             console.error('Error loading image', this.src);
             const urlParams = new URLSearchParams(window.location.search);
-            const countryElement = document.getElementById("country");
 
             if (urlParams.get('id')) {
                 firstLoad = false;
