@@ -281,7 +281,7 @@
                 if (response.ok) {
                     if (/image\/jpe?g/.test(contentType)) {
                         feed.src = newUrl + '?t=' + new Date().getTime();
-                    } else if (/video/.test(contentType)) {
+                    } else {
                         feed.src = newUrl;
                     }
                 }
