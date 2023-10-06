@@ -282,7 +282,6 @@
                 
                     const urlParams = new URLSearchParams(window.location.search);
                     if (urlParams.get('id')) {
-                        firstLoad = false;
                         feed.style.width = "80px";
                         feed.style.height = "50px";
                         feed.src = loadingGif;
@@ -291,7 +290,6 @@
                     } else if (firstLoad) {
                         window.location.href = "?new=true";
                     } else {
-                        firstLoad = false;
                         console.log("Trying again");
                         setTimeout(refreshImage, 250);
                     }
