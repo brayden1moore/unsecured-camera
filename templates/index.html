@@ -284,15 +284,20 @@
         async function refreshImage() {
             try {
                 const response = await fetch(newUrl, { method: 'HEAD' });
-                if (response.ok && /image\/jpe?g/.test(response.headers.get('Content-Type'))) {
-                    feed.src = newUrl;
+                const contentType = response.headers.get('Content-Type');
+                if (response.ok) {
+                    if (/image\/jpe?g/.test(contentType)) {
+                        feed.src = newUrl + '?t=' + new Date().getTime();
+                    } else if (/video/.test(contentType)) {
+                        feed.src = newUrl;
+                    }
                 }
             } catch (error) {
                 console.error('Fetch failed:', error);
             }
         }
     
-        feed.onload = async function() {
+        feed.onload = function() {
             if (firstLoad) {
                 countryElement.textContent = "connecting...";
                 infoDiv.style.opacity = "0";
@@ -309,11 +314,11 @@
             }, 100);
     
             infoText.style.opacity = "1";
-            await refreshImage();
+            setTimeout(refreshImage, 1000);  // Refresh every second if it's an image
         };
     
         feed.onerror = function() {
-            console.error('Error loading image', this.src);
+            console.error('Error loading feed', this.src);
             const urlParams = new URLSearchParams(window.location.search);
     
             if (urlParams.get('id')) {
@@ -331,11 +336,11 @@
                 setTimeout(refreshImage, 250);
             }
         };
-
-        refreshImage(); 
-        feed.src = newUrl;
+    
+        refreshImage();  // This will trigger feed.onload when the feed is loaded
         console.log('Feed load initiated');
     });
+
 
 
 
