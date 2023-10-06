@@ -22,6 +22,15 @@ with open('video_urls.pkl', 'rb') as f:
 with open('owner_dict.pkl', 'rb') as f:
     owner_dict = pkl.load(f)
 
+from urllib.parse import urlsplit, urlunsplit, quote, parse_qsl, urlencode
+
+def encode_url(url):
+    scheme, netloc, path, query_string, fragment = urlsplit(url)
+    query_params = parse_qsl(query_string)
+    encoded_query_params = [(key, quote(value)) for key, value in query_params]
+    encoded_query_string = urlencode(encoded_query_params)
+    return urlunsplit((scheme, netloc, path, encoded_query_string, fragment))
+
 def load_exception_urls():
     url = os.environ['EXCEPTIONS']
     response = requests.get(url)
@@ -84,6 +93,7 @@ def proxy(url):
     }
 
     clean_url = url.replace('proxy/', '')
+    clean_url = encode_url(clean_url)
     
     try:
         import time
