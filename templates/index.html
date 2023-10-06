@@ -331,7 +331,8 @@
                 setTimeout(refreshImage, 250);
             }
         };
-    
+
+        feed.src = "{{ url }}";
         refreshImage(); 
         console.log('Feed load initiated');
     });
