@@ -287,7 +287,14 @@
                 }
             } catch (error) {
                 console.error('Fetch failed:', error);
-                feed.onerror();
+                if (error.name === 'AbortError') {
+                    console.error('Fetch aborted:', error);
+                } else {
+                    console.error('Fetch failed:', error);
+                }
+                if (firstLoad) {
+                    window.location.href = "?new=true";
+                }
             }
         }
     
