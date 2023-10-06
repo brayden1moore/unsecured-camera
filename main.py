@@ -82,6 +82,7 @@ from urllib.parse import urlparse, parse_qs
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
+    print("CHOSEN",url)
 
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -128,7 +129,6 @@ def index():
         session['current_feed'] = id
 
     url = encode_url(url)
-    print("CHOSEN",url)
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     print('IP:',ip)
