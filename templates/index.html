@@ -162,11 +162,13 @@
           cursor: pointer;
         }
         #additional-info {
-          display: none;
-          transition: 0.3s ease;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
         }
-      
-
+        #additional-info.expanded {
+          max-height: 100; 
+        }
 
 
         @media only screen and (orientation: portrait) {
@@ -437,13 +439,17 @@
     const additionalInfo = document.getElementById('additional-info');
     const showMore = document.getElementById('show-more');
     
-    additionalInfo.style.display = 'none';
-    
     infoText.addEventListener('click', function() {
-      additionalInfo.style.display = (additionalInfo.style.display === 'none') ? 'block' : 'none';
-      showMore.style.display = (additionalInfo.style.display === 'none') ? 'inline' : 'none';
+      if (additionalInfo.classList.contains('expanded')) {
+        additionalInfo.classList.remove('expanded');
+        showMore.style.display = 'inline';
+      } else {
+        additionalInfo.classList.add('expanded');
+        showMore.style.display = 'none';
+      }
     });
   });
+
 
       
     </script>
