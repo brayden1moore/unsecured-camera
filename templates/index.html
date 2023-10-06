@@ -322,7 +322,12 @@
             locationName.textContent = "{{ page_title|safe }}";
   
             if (isJpeg) {
-                setTimeout(refreshImage, 250);
+                setTimeout(async () => {
+                    await refreshImage();
+                }, 250);
+            }
+            else {
+                await refreshImage();
             }
             
             feed.onload = function() {
