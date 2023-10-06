@@ -295,7 +295,7 @@
                         window.location.href = "?new=true";
                     } else {
                         console.log("Trying again");
-                        setTimeout(refreshImage, 500);
+                        setTimeout(refreshImage, 250);
                     }
                     return;
                 }
@@ -315,12 +315,6 @@
                 console.error('Fetch failed:', error);
 
             }
-
-          if (isJpeg) {
-                setTimeout(async () => {
-                    await refreshImage();
-                }, 250);
-          }
         }
     
         async function init() {
@@ -335,6 +329,12 @@
             
             feed.onload = function() {
                 isLoading = false;
+                if (isJpeg) {
+                  setTimeout(async () => {
+                      await refreshImage();
+                  }, 250);
+                }
+              
                 if (firstLoad) {
                     countryElement.textContent = "connecting...";
                     infoDiv.style.opacity = "0";
