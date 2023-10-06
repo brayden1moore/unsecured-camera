@@ -162,7 +162,7 @@
           cursor: pointer;
         }
         #additional-info {
-          display: none;
+          height: 0px;
           transition: 0.3s ease;
         }
       
@@ -441,11 +441,11 @@
     const additionalInfo = document.getElementById('additional-info');
     const showMore = document.getElementById('show-more');
     
-    additionalInfo.style.display = 'none';
+    additionalInfo.style.height = '0px';
     
     infoText.addEventListener('click', function() {
-      additionalInfo.style.display = (additionalInfo.style.display === 'none') ? 'block' : 'none';
-      showMore.style.display = (additionalInfo.style.display === 'none') ? 'inline' : 'none';
+      additionalInfo.style.display = (additionalInfo.style.height === '0px') ? 'auto' : '0px';
+      showMore.style.display = (additionalInfo.style.height === '0px') ? 'inline' : 'none';
     });
   });
 
