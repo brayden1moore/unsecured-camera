@@ -444,10 +444,10 @@
       if (additionalInfo.style.height === '0px') {
         const scrollHeight = additionalInfo.scrollHeight;
         additionalInfo.style.height = `${scrollHeight}px`;
-        showMore.textContent = 'less <i style="margin-bottom:20px; color:rgb(53, 53, 53);" id="more-button" class="fa-solid fa-caret-up"></i>';
+        showMore.innerHTML = 'less <i style="margin-bottom:20px; color:rgb(53, 53, 53);" id="more-button" class="fa-solid fa-caret-up"></i>';
       } else {
         additionalInfo.style.height = '0';
-        showMore.textContent = 'more <i style="margin-bottom:20px; color:rgb(53, 53, 53);" id="more-button" class="fa-solid fa-caret-down"></i>';
+        showMore.innerHTML = 'more <i style="margin-bottom:20px; color:rgb(53, 53, 53);" id="more-button" class="fa-solid fa-caret-down"></i>';
       }
     });
   });
