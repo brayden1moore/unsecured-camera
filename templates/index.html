@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="preload" href="{{ url_for('static', filename='eye.gif') }}" as="image">
   <link rel="icon" type="image/png" href="https://i.ibb.co/gvKPXJD/eye.gif">
-    <title>{{ page_title }}</title>
+    <title>{{ page_title|safe }}</title>
     <style>
         body {
             justify-content: center;
@@ -211,7 +211,7 @@
               
                     <div class="info" id="info">
                       <h1 id="country" style="color:rgb(53, 53, 53); margin-top: 10px; font-family: 'Helvetica'; font-weight: 50; margin-bottom: 10px;"> searching...</h1>        
-                      <a href="{{ ip_link }}" target="_blank"> <h3 style="border-bottom: 2px solid yellow;" id="location-name">{{ page_title }}</h3></a>
+                      <a href="{{ ip_link }}" target="_blank"> <h3 style="border-bottom: 2px solid yellow;" id="location-name">{{ page_title|safe }}</h3></a>
 
                       <div style="display: flex; margin-top: 22px; margin-bottom: 0%;">
                         <a href="?new=true" style="margin-right: 10px; display: inline-block;">
@@ -278,7 +278,7 @@
         infoText.style.opacity = "0";
       
         const locationName = document.getElementById('location-name');
-        locationName.textContent = "{{ page_title }}";
+        locationName.textContent = "{{ page_title|safe }}";
       
         const newUrl = decodeURIComponent("{{ url|safe }}");
         
@@ -306,7 +306,7 @@
             old = newUrl;
             setTimeout(() => {
               feed.src = this.src;
-              locationName.textContent = "{{ name }}";
+              locationName.textContent = "{{ name|safe }}";
               feed.style.width = "100%";
               feed.style.height = "70%";
               feed.style.opacity = "1";
