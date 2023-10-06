@@ -153,6 +153,16 @@
         #share:hover {
           opacity: 0.5;
         }
+        #info-container {
+          overflow: hidden;
+          max-height: auto; 
+          transition: max-height 0.3s ease;
+        }
+        .collapsed {
+          max-height: 0;
+        }
+
+
 
         @media only screen and (orientation: portrait) {
             .body {
@@ -219,15 +229,19 @@
                         <i id="share" class="fa-solid fa-link" data-id="{{ id }}"></i>
                         <p id="copied" class="tag" style="visibility: hidden;">copied</p>
                       </div>
-                      
-                      <p id="info-text" style="color:rgb(53, 53, 53); font-family: 'Helvetica'; font-weight: 50;">
-                          owner: {{ owner }}<br>
-                          ip: {{ ip }}<br>  
-                          lat, lon: {{ loc }}<br>
-                          time: <span id="time"></span><br><br>
-                          
-                        <span class="tag">a brayden moore website<br></span>thanks for visiting
-                        </p>
+
+                      <button id="toggle-button">more info</button>
+                      <div id="info-container">
+                        <p id="info-text" style="color:rgb(53, 53, 53); font-family: 'Helvetica'; font-weight: 50;">
+                            owner: {{ owner }}<br>
+                            ip: {{ ip }}<br>  
+                            lat, lon: {{ loc }}<br>
+                            time: <span id="time"></span><br><br>
+                            
+                          <span class="tag">a brayden moore website<br></span>thanks for visiting
+                          </p>
+                      </div>
+                    
 
                       <!--
                         <div class="map-div">
@@ -410,6 +424,12 @@
       if (event.keyCode === 32) { 
         window.location.href = '/?new=true';
       }
+    });
+
+  // Toggle info on click
+    document.getElementById('toggle-button').addEventListener('click', function() {
+      const container = document.getElementById('info-container');
+      container.classList.toggle('collapsed');
     });
       
     </script>
