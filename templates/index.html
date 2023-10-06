@@ -319,7 +319,9 @@
             setTimeout(refreshImage, 250);
             country.textContent = "{{ country }}"
         };
-        
+
+        let retryCount = 0;
+        const maxRetries = 3;   
         img.onerror = function() {
             feed.style.width = "80px";
             feed.style.height = "50px";
