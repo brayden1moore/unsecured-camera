@@ -328,6 +328,7 @@
             await refreshImage();
             
             feed.onload = function() {
+                countryElement.textContent = "connecting...";
                 isLoading = false;
                 if (isJpeg) {
                   setTimeout(async () => {
