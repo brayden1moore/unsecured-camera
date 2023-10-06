@@ -270,6 +270,7 @@
         const locationName = document.getElementById("location-name");
         const countryElement = document.getElementById("country");
         let firstLoad = true;
+        let isJpeg = false;
     
         const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
         const newUrl = decodeURIComponent("{{ url|safe }}");
@@ -300,8 +301,10 @@
                 if (response.ok) {
                     if (/image\/jpe?g/.test(contentType)) {
                         feed.src = newUrl + '?t=' + new Date().getTime();
+                        isJpeg = true;
                     } else {
                         feed.src = newUrl;
+                        isJpeg = false;
                     }
                 }
             } catch (error) {
@@ -317,8 +320,10 @@
             feed.style.opacity = "0.15";
             infoText.style.opacity = "0";
             locationName.textContent = "{{ page_title|safe }}";
-
-            await refreshImage();
+  
+            if (isJpeg) {
+                setTimeout(refreshImage, 250);
+            }
             
             feed.onload = function() {
                 if (firstLoad) {
