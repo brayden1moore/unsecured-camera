@@ -329,6 +329,7 @@
             const countryElement = document.getElementById("country");
 
             if (urlParams.get('id')) {
+                feed.style.opacity = "0.15";
                 countryElement.textContent = "couldn't connect.";
             } 
             else {
