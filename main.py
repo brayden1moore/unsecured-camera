@@ -29,7 +29,9 @@ def encode_url(url):
     query_params = parse_qsl(query_string)
     encoded_query_params = [(key, quote(value)) for key, value in query_params]
     encoded_query_string = urlencode(encoded_query_params)
-    return urlunsplit((scheme, netloc, path, encoded_query_string, fragment))
+    finished = urlunsplit((scheme, netloc, path, encoded_query_string, fragment))
+    print(finished)
+    return finished
 
 def load_exception_urls():
     url = os.environ['EXCEPTIONS']
@@ -124,7 +126,8 @@ def index():
         url = live_urls[int(id)]
         feed = id
         session['current_feed'] = id
-    
+
+    url = encode_url(url)
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     print('IP:',ip)
