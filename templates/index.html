@@ -316,7 +316,7 @@
             const infoText = document.getElementById("info-text");
             infoText.style.opacity = "1";
           
-            setTimeout(refreshImage, 1000);
+            setTimeout(refreshImage, 250);
             country.textContent = "{{ country }}"
         };
    
@@ -333,7 +333,8 @@
                 countryElement.textContent = "couldn't connect.";
             } 
             else {
-                setTimeout(refreshImage, 1000);
+                console.log("Trying again")
+                setTimeout(refreshImage, 250);
             } 
           };   
         
