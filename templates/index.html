@@ -277,7 +277,7 @@
         async function refreshImage() {
             try {
                 const response = await fetch(newUrl, { method: 'HEAD' });
-                if (!response.ok) { // If HTTP code is not OK (like 500)
+                if (!response.ok) { 
                     console.error(`Fetch failed with status: ${response.status}`);
                 
                     const urlParams = new URLSearchParams(window.location.search);
