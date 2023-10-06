@@ -327,17 +327,21 @@
             
             const urlParams = new URLSearchParams(window.location.search);
             const countryElement = document.getElementById("country");
+
             if (urlParams.get('id')) {
                 countryElement.textContent = "couldn't connect.";
-            }
-            else if (firstLoad === true) {
+            } else if (firstLoad === true) {
                 window.location.href = "?new=true";
-            }
-            else {
-              console.log('error loading, trying again.')
-            }
-
-        };
+            } else {
+                console.log('Error loading, trying again.');
+                if (retryCount < maxRetries) {
+                    setTimeout(refreshImage, 250);
+                    retryCount++;
+                } else {
+                    console.log('Max retry attempts reached.');
+                }
+              }
+          };   
         
         img.src = newUrl;
     });
