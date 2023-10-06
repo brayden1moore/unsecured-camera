@@ -267,6 +267,7 @@
     let currentFeed;
     let firstLoad = true;
     document.addEventListener("DOMContentLoaded", function() {
+        currentFeed = this.getAttribute("data-id");
         const feed = document.getElementById("feed");
         feed.style.width = "80px";
         feed.style.height = "50px";
@@ -327,7 +328,6 @@
             
             const urlParams = new URLSearchParams(window.location.search);
             const countryElement = document.getElementById("country");
-            const id = this.getAttribute("data-id");
 
             if (urlParams.get('id')) {
                 feed.style.opacity = "0.15";
@@ -338,7 +338,7 @@
             } 
             else {
               console.log("error, refreshing");
-              window.location.href = `?new=false&id=${id}`;
+              window.location.href = `?new=false&id=${currentFeed}`;
             }
           };   
         
