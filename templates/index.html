@@ -321,7 +321,6 @@
                     await refreshImage();
                 }, 250);
           }
-          isLoading = false;
         }
     
         async function init() {
@@ -335,6 +334,7 @@
             await refreshImage();
             
             feed.onload = function() {
+                isLoading = false;
                 if (firstLoad) {
                     countryElement.textContent = "connecting...";
                     infoDiv.style.opacity = "0";
