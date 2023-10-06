@@ -321,19 +321,19 @@
         };
    
         img.onerror = function() {
-            feed.style.width = "80px";
-            feed.style.height = "50px";
-            feed.src = loadingGif;
             
             const urlParams = new URLSearchParams(window.location.search);
             const countryElement = document.getElementById("country");
 
             if (urlParams.get('id')) {
+                feed.style.width = "80px";
+                feed.style.height = "50px";
+                feed.src = loadingGif;
                 feed.style.opacity = "0.15";
                 countryElement.textContent = "couldn't connect.";
             } 
             else {
-                window.location.href = "?new=true";
+                setTimeout(refreshImage, 1000);
             } 
           };   
         
