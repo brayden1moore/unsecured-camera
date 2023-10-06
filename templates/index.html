@@ -300,6 +300,7 @@
         
         const img = new Image();
         img.onload = function() {
+            countryElement.textContent = "connecting...";
             if (firstLoad) {
               infoDiv.style.opacity = "0";
             }
@@ -307,8 +308,8 @@
             old = newUrl;
             setTimeout(() => {
               feed.src = this.src;
-              countryElement.textContent = "connecting...";
               locationName.textContent = "{{ name|safe }}";
+              countryElement.textContent = "{{ country }}";
               feed.style.width = "100%";
               feed.style.height = "70%";
               feed.style.opacity = "1";
@@ -319,7 +320,6 @@
             infoText.style.opacity = "1";
           
             setTimeout(refreshImage, 250);
-            country.textContent = "{{ country }}"
         };
    
         img.onerror = function() {
