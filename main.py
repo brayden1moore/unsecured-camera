@@ -134,6 +134,7 @@ def index():
 
     print("GENERATED", url)
     url = encode_url(url)
+    url = url.replace('640x480','1280x960')
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     print('IP:',ip)
