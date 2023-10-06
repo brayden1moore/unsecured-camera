@@ -442,7 +442,7 @@
     additionalInfo.style.overflow = 'hidden';
     additionalInfo.style.transition = 'height 0.3s ease-in-out';
   
-    infoText.addEventListener('click', function() {
+    showMore.addEventListener('click', function() {
       if (additionalInfo.style.height === '0px') {
         const scrollHeight = additionalInfo.scrollHeight;
         additionalInfo.style.height = `${scrollHeight}px`;
