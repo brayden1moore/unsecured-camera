@@ -330,10 +330,7 @@
             if (urlParams.get('id')) {
                 countryElement.textContent = "couldn't connect.";
             }
-            else if (firstLoad === false) {
-                window.location.href = "?new=false";
-            }
-            else {
+            else if (firstLoad === true) {
                 window.location.href = "?new=true";
             }
 
