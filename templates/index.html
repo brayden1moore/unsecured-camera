@@ -279,9 +279,7 @@
                 const response = await fetch(newUrl, { method: 'HEAD' });
                 if (!response.ok) { // If HTTP code is not OK (like 500)
                     console.error(`Fetch failed with status: ${response.status}`);
-                    if (firstLoad) {
-                        window.location.href = "?new=true";
-                    }
+                    feed.onerror();
                     return;
                 }
               
