@@ -59,7 +59,7 @@ def get_location(ip):
     geolite2.close()
     end_time = time.time()  
 
-    elapsed_time = end_time - start_time  # Calculate elapsed time
+    elapsed_time = end_time - start_time
     print(f"\nTime taken for get_location: {elapsed_time} seconds\n")
 
     if location:
@@ -88,6 +88,7 @@ from urllib.parse import urlparse, parse_qs
 
 @app.route('/proxy/<path:url>')
 def proxy(url): 
+    start_time = time.time() 
     
     full_url = url
     query_string = request.query_string.decode("utf-8")
@@ -110,11 +111,16 @@ def proxy(url):
     clean_url = encode_url(clean_url)
     
     try:
-        import time
         start = time.time()
+        
         logging.info(f"Sending request to: {clean_url}")
         req = requests.get(clean_url, headers=headers, stream=True, timeout=3)
         logging.info(f"TIME: {time.time()-start}, Status Code: {req.status_code}, Response Headers: {req.headers}")
+
+        end_time = time.time()  
+        elapsed_time = end_time - start_time  
+        print(f"\nTime taken for proxy: {elapsed_time} seconds\n")
+        
         return Response(req.iter_content(chunk_size=1024), content_type=req.headers['content-type'])
     
     except Exception as e:
