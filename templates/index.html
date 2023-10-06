@@ -307,9 +307,16 @@
                         isJpeg = false;
                     }
                 }
+              
             } catch (error) {
                 console.error('Fetch failed:', error);
 
+            }
+
+          if (isJpeg) {
+                setTimeout(async () => {
+                    await refreshImage();
+                }, 250);
             }
         }
     
@@ -321,14 +328,7 @@
             infoText.style.opacity = "0";
             locationName.textContent = "{{ page_title|safe }}";
   
-            if (isJpeg) {
-                setTimeout(async () => {
-                    await refreshImage();
-                }, 250);
-            }
-            else {
-                await refreshImage();
-            }
+            await refreshImage();
             
             feed.onload = function() {
                 if (firstLoad) {
