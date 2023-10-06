@@ -307,6 +307,7 @@
             old = newUrl;
             setTimeout(() => {
               feed.src = this.src;
+              countryElement.textContent = "connecting...";
               locationName.textContent = "{{ name|safe }}";
               feed.style.width = "100%";
               feed.style.height = "70%";
@@ -344,7 +345,6 @@
           };   
         
         img.src = newUrl;
-        countryElement.textContent = "connecting...";
         console.log('Feed load success');
     });
 
