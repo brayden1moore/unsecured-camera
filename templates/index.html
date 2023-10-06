@@ -271,11 +271,14 @@
         const countryElement = document.getElementById("country");
         let firstLoad = true;
         let isJpeg = false;
+        let isLoading = false;
     
         const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
         const newUrl = decodeURIComponent("{{ url|safe }}");
     
         async function refreshImage() {
+            if (isLoading) return;
+            isLoading = true;
             try {
                 const response = await fetch(newUrl, { method: 'HEAD' });
                 if (!response.ok) { 
@@ -317,7 +320,8 @@
                 setTimeout(async () => {
                     await refreshImage();
                 }, 250);
-            }
+          }
+          isLoading = false;
         }
     
         async function init() {
