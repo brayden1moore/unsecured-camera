@@ -304,8 +304,6 @@
             infoText.style.opacity = "0";
             locationName.textContent = "{{ page_title|safe }}";
     
-            await refreshImage();
-    
             feed.onload = function() {
                 if (firstLoad) {
                     countryElement.textContent = "connecting...";
@@ -344,6 +342,8 @@
                     setTimeout(refreshImage, 250);
                 }
             };
+
+            await refreshImage();
         }
     
         init();
