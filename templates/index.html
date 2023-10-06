@@ -300,13 +300,15 @@
 
         async function refreshImage() {
             const timestamp = new Date().getTime();
-            const fetchUrl = `${newUrl}?t=${timestamp}`;
+            //const fetchUrl = `${newUrl}?t=${timestamp}`;
+            const fetchUrl = newUrl;
         
             try {
                 const response = await fetch(fetchUrl, { method: 'HEAD' });
         
                 if (response.ok && response.headers.get('Content-Type') === 'image/jpeg') {
-                    img.src = `${newUrl}&t=${timestamp}`;
+                    //img.src = `${newUrl}&t=${timestamp}`;
+                    img.src = newUrl;
                 }
             } catch (error) {
                 console.error('Fetch failed:', error);
