@@ -128,6 +128,7 @@ def index():
         feed = id
         session['current_feed'] = id
 
+    print("GENERATED", url)
     url = encode_url(url)
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
