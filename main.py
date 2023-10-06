@@ -87,7 +87,8 @@ def latlon_to_pixel(loc):
 from urllib.parse import urlparse, parse_qs
 
 @app.route('/proxy/<path:url>')
-def proxy(url):
+def proxy(url): 
+    
     full_url = url
     query_string = request.query_string.decode("utf-8")
     if query_string:
@@ -114,7 +115,7 @@ def proxy(url):
         logging.info(f"Sending request to: {clean_url}")
         req = requests.get(clean_url, headers=headers, stream=True, timeout=3)
         logging.info(f"TIME: {time.time()-start}, Status Code: {req.status_code}, Response Headers: {req.headers}")
-        return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
+        return Response(req.iter_content(chunk_size=1024), content_type=req.headers['content-type'])
     
     except Exception as e:
         #logging.error(f"Error in proxy: {str(e)}")
