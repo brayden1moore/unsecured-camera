@@ -162,7 +162,7 @@
           cursor: pointer;
         }
         #additional-info {
-          height: 0px;
+          display: none;
           transition: 0.3s ease;
         }
       
@@ -199,10 +199,6 @@
               width: 100%;
               max-height: 100%;
             }
-            .info {
-                width: 90%;
-                height: 65%;
-              }
         }
     </style>
 </head>
@@ -441,11 +437,11 @@
     const additionalInfo = document.getElementById('additional-info');
     const showMore = document.getElementById('show-more');
     
-    additionalInfo.style.height = '0px';
+    additionalInfo.style.display = 'none';
     
     infoText.addEventListener('click', function() {
-      additionalInfo.style.display = (additionalInfo.style.height === '0px') ? 'auto' : '0px';
-      showMore.style.display = (additionalInfo.style.height === '0px') ? 'inline' : 'none';
+      additionalInfo.style.display = (additionalInfo.style.display === 'none') ? 'block' : 'none';
+      showMore.style.display = (additionalInfo.style.display === 'none') ? 'inline' : 'none';
     });
   });
 
