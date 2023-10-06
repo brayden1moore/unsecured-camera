@@ -227,11 +227,10 @@
                       </div>
 
                         <p id="info-text" style="color:rgb(53, 53, 53); font-family: 'Helvetica'; font-weight: 50;">
-
+                          owner: {{ owner }}<br>
                           time: <span id="time"></span><br>
-                          <span id="show-more">...</span>
+                          <span id="show-more">...</span><br>
                           <span id="additional-info">
-                            owner: {{ owner }}<br>
                             ip: {{ ip }}<br>  
                             lat, lon: {{ loc }}
                             <br><br>
@@ -428,13 +427,16 @@
   document.addEventListener('DOMContentLoaded', function() {
     const infoText = document.getElementById('info-text');
     const additionalInfo = document.getElementById('additional-info');
+    const showMore = document.getElementById('show-more');
     
     additionalInfo.style.display = 'none';
     
     infoText.addEventListener('click', function() {
       additionalInfo.style.display = (additionalInfo.style.display === 'none') ? 'block' : 'none';
+      showMore.style.display = (additionalInfo.style.display === 'none') ? 'inline' : 'none';
     });
   });
+
       
     </script>
 </body>
