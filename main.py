@@ -111,9 +111,12 @@ def proxy(url):
         return Response(req.iter_content(chunk_size=2048), content_type=req.headers['content-type'])
     
     except Exception as e:
+        #logging.error(f"Error in proxy: {str(e)}")
+        #print('Skipped')
+        #return redirect(url_for('index', new='true'))
+
         logging.error(f"Error in proxy: {str(e)}")
-        print('Skipped')
-        return redirect(url_for('index', new='true'))
+        return Response("Error", status=500)
 
 
 @app.route('/')
