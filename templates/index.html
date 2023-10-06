@@ -153,14 +153,6 @@
         #share:hover {
           opacity: 0.5;
         }
-        #info-container {
-          overflow: hidden;
-          max-height: auto; 
-          transition: max-height 0.3s ease;
-        }
-        .collapsed {
-          max-height: 0;
-        }
 
 
 
@@ -230,8 +222,6 @@
                         <p id="copied" class="tag" style="visibility: hidden;">copied</p>
                       </div>
 
-                      <button id="toggle-button">more info</button>
-                      <div id="info-container">
                         <p id="info-text" style="color:rgb(53, 53, 53); font-family: 'Helvetica'; font-weight: 50;">
                             owner: {{ owner }}<br>
                             ip: {{ ip }}<br>  
@@ -239,8 +229,7 @@
                             time: <span id="time"></span><br><br>
                             
                           <span class="tag">a brayden moore website<br></span>thanks for visiting
-                          </p>
-                      </div>
+                        </p>
                     
 
                       <!--
@@ -424,12 +413,6 @@
       if (event.keyCode === 32) { 
         window.location.href = '/?new=true';
       }
-    });
-
-  // Toggle info on click
-    document.getElementById('toggle-button').addEventListener('click', function() {
-      const container = document.getElementById('info-container');
-      container.classList.toggle('collapsed');
     });
       
     </script>
