@@ -238,7 +238,7 @@
                             lat, lon: {{ loc }}
                           </span>
                           
-                          <span id="show-more">more <i style="margin-bottom:20px; color:rgb(53, 53, 53);" class="fa-solid fa-caret-down"></i></span>
+                          <span id="show-more">more <i style="margin-bottom:20px; color:rgb(53, 53, 53);" id="more-button" class="fa-solid fa-caret-down"></i></span>
 
                           <span class="tag"><br>a brayden moore website<br></span>thanks for visiting
                         
@@ -433,6 +433,7 @@
     const infoText = document.getElementById('info-text');
     const additionalInfo = document.getElementById('additional-info');
     const showMore = document.getElementById('show-more');
+    const moreButton = document.getElementById('more-button');
   
     // Initial setup
     additionalInfo.style.height = '0';
@@ -444,9 +445,11 @@
         const scrollHeight = additionalInfo.scrollHeight;
         additionalInfo.style.height = `${scrollHeight}px`;
         showMore.textContent = 'less';
+        moreButton.className = "fa-solid fa-caret-up";
       } else {
         additionalInfo.style.height = '0';
         showMore.textContent = 'more';
+        moreButton.className = "fa-solid fa-caret-down";
       }
     });
   });
