@@ -53,9 +53,15 @@ def get_ip_info(ip_address):
 
 from geolite2 import geolite2
 def get_location(ip):
+    start_time = time.time()  
     reader = geolite2.reader()
     location = reader.get(ip)
     geolite2.close()
+    end_time = time.time()  
+
+    elapsed_time = end_time - start_time  # Calculate elapsed time
+    print(f"\nTime taken for get_location: {elapsed_time} seconds\n")
+
     if location:
         return {'country': location['country']['names']['en'] if 'country' in location else 'unknown country',
                 'city': location['city']['names']['en'] if 'city' in location else 'unknown city',
