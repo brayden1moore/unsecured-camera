@@ -263,70 +263,60 @@
     <script>
 
     // Handle feed load and refresh
-    let loadingGif = "{{ url_for('static', filename='eye.gif') }}";
-    let currentFeed;
-    let firstLoad = true;
     document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
+        const infoDiv = document.getElementById("info");
+        const infoText = document.getElementById("info-text");
+        const locationName = document.getElementById("location-name");
+        const countryElement = document.getElementById("country");
+        let firstLoad = true;
+    
+        const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
+        const newUrl = decodeURIComponent("{{ url|safe }}");
+    
         feed.style.width = "80px";
         feed.style.height = "50px";
         feed.src = loadingGif;
         feed.style.opacity = "0.15";
-
-        const infoDiv = document.getElementById("info");
-        const infoText = document.getElementById("info-text");
         infoText.style.opacity = "0";
-      
-        const locationName = document.getElementById('location-name');
-        const countryElement = document.getElementById("country");
         locationName.textContent = "{{ page_title|safe }}";
-      
-        const newUrl = decodeURIComponent("{{ url|safe }}");
-
+    
         async function refreshImage() {
-            const timestamp = new Date().getTime();
-            //const fetchUrl = `${newUrl}?t=${timestamp}`;
-            const fetchUrl = newUrl;
-        
             try {
-                const response = await fetch(fetchUrl, { method: 'HEAD' });
-        
-                if (response.ok && response.headers.get('Content-Type') === 'image/jpeg') {
-                    //img.src = `${newUrl}&t=${timestamp}`;
-                    img.src = newUrl;
+                const response = await fetch(newUrl, { method: 'HEAD' });
+                if (response.ok && /image\/jpe?g/.test(response.headers.get('Content-Type'))) {
+                    feed.src = newUrl;
                 }
             } catch (error) {
                 console.error('Fetch failed:', error);
             }
         }
-        
+    
         const img = new Image();
-        img.onload = function() {
+        img.onload = async function() {
             if (firstLoad) {
-              countryElement.textContent = "connecting...";
-              infoDiv.style.opacity = "0";
+                countryElement.textContent = "connecting...";
+                infoDiv.style.opacity = "0";
             }
             firstLoad = false;
+    
             setTimeout(() => {
-              feed.src = newUrl;
-              locationName.textContent = "{{ name|safe }}";
-              countryElement.textContent = "{{ country|safe }}";
-              feed.style.width = "100%";
-              feed.style.height = "70%";
-              feed.style.opacity = "1";
-              infoDiv.style.opacity = "1";
+                locationName.textContent = "{{ name|safe }}";
+                countryElement.textContent = "{{ country|safe }}";
+                feed.style.width = "100%";
+                feed.style.height = "70%";
+                feed.style.opacity = "1";
+                infoDiv.style.opacity = "1";
             }, 100);
-
-            const infoText = document.getElementById("info-text");
+    
             infoText.style.opacity = "1";
-          
-            refreshImage();
+            await refreshImage();
         };
-   
+    
         img.onerror = function() {
             console.error('Error loading image', this.src);
             const urlParams = new URLSearchParams(window.location.search);
-
+    
             if (urlParams.get('id')) {
                 firstLoad = false;
                 feed.style.width = "80px";
@@ -334,19 +324,19 @@
                 feed.src = loadingGif;
                 feed.style.opacity = "0.15";
                 countryElement.textContent = "couldn't connect.";
-            } 
-            else if (firstLoad) {
+            } else if (firstLoad) {
                 window.location.href = "?new=true";
-            }
-            else {
+            } else {
                 firstLoad = false;
-                console.log("Trying again")
+                console.log("Trying again");
                 setTimeout(refreshImage, 250);
-            } 
-          };   
-        
+            }
+        };
+    
+        img.src = newUrl;  // This will trigger img.onload when the image is loaded
         console.log('Feed load success');
     });
+
 
     // Time count
     document.addEventListener("DOMContentLoaded", function() {
