@@ -299,7 +299,7 @@
             infoText.style.opacity = "0";
             locationName.textContent = "{{ page_title|safe }}";
     
-            await refreshImage();
+            refreshImage();
     
             feed.onload = function() {
                 if (firstLoad) {
