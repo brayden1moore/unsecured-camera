@@ -310,7 +310,7 @@
             setTimeout(() => {
               feed.src = newUrl;
               locationName.textContent = "{{ name|safe }}";
-              countryElement.textContent = "{{ country }}";
+              countryElement.textContent = "{{ country|safe }}";
               feed.style.width = "100%";
               feed.style.height = "70%";
               feed.style.opacity = "1";
