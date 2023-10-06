@@ -277,6 +277,14 @@
         async function refreshImage() {
             try {
                 const response = await fetch(newUrl, { method: 'HEAD' });
+                if (!response.ok) { // If HTTP code is not OK (like 500)
+                    console.error(`Fetch failed with status: ${response.status}`);
+                    if (firstLoad) {
+                        window.location.href = "?new=true";
+                    }
+                    return;
+                }
+              
                 const contentType = response.headers.get('Content-Type');
                 if (response.ok) {
                     if (/image\/jpe?g/.test(contentType)) {
@@ -287,14 +295,6 @@
                 }
             } catch (error) {
                 console.error('Fetch failed:', error);
-                if (error.name === 'AbortError') {
-                    console.error('Fetch aborted:', error);
-                } else {
-                    console.error('Fetch failed:', error);
-                }
-                if (firstLoad) {
-                    window.location.href = "?new=true";
-                }
             }
         }
     
