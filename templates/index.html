@@ -280,7 +280,7 @@
         const locationName = document.getElementById('location-name');
         locationName.textContent = "{{ page_title }}";
       
-        const newUrl = "{{ url }}";
+        const newUrl = "{{ url|safe }}";
         
         function refreshImage() {
             let xhr = new XMLHttpRequest();
