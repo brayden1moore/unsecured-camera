@@ -293,6 +293,22 @@
                 }
             } catch (error) {
                 console.error('Fetch failed:', error);
+                const urlParams = new URLSearchParams(window.location.search);
+    
+                if (urlParams.get('id')) {
+                    firstLoad = false;
+                    feed.style.width = "80px";
+                    feed.style.height = "50px";
+                    feed.src = loadingGif;
+                    feed.style.opacity = "0.15";
+                    countryElement.textContent = "couldn't connect.";
+                } else if (firstLoad) {
+                    window.location.href = "?new=true";
+                } else {
+                    firstLoad = false;
+                    console.log("Trying again");
+                    setTimeout(refreshImage, 250);
+                }
             }
         }
     
