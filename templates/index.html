@@ -443,10 +443,10 @@
       if (additionalInfo.style.height === '0px') {
         const scrollHeight = additionalInfo.scrollHeight;
         additionalInfo.style.height = `${scrollHeight}px`;
-        showMore.style.display = 'none';
+        showMore.textContent = 'less';
       } else {
         additionalInfo.style.height = '0';
-        showMore.style.display = 'inline';
+        showMore.textContent = 'more';
       }
     });
   });
