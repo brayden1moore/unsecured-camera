@@ -321,7 +321,7 @@
         };
    
         img.onerror = function() {
-            
+            console.error('Error loading image', this.src);
             const urlParams = new URLSearchParams(window.location.search);
             const countryElement = document.getElementById("country");
 
