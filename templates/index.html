@@ -155,6 +155,7 @@
         }
         #additional-info {
           display: none;
+          transition: 0.3s ease;
         }
       
 
@@ -227,10 +228,11 @@
                       </div>
 
                         <p id="info-text" style="color:rgb(53, 53, 53); font-family: 'Helvetica'; font-weight: 50;">
-                          owner: {{ owner }}<br>
+
                           time: <span id="time"></span><br>
                           <span id="show-more">...<br><br></span>
                           <span id="additional-info">
+                            owner: {{ owner }}<br>
                             ip: {{ ip }}<br>  
                             lat, lon: {{ loc }}
                             <br><br>
