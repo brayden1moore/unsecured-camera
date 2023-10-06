@@ -279,7 +279,22 @@
                 const response = await fetch(newUrl, { method: 'HEAD' });
                 if (!response.ok) { // If HTTP code is not OK (like 500)
                     console.error(`Fetch failed with status: ${response.status}`);
-                    feed.onerror();
+                
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.get('id')) {
+                        firstLoad = false;
+                        feed.style.width = "80px";
+                        feed.style.height = "50px";
+                        feed.src = loadingGif;
+                        feed.style.opacity = "0.15";
+                        countryElement.textContent = "couldn't connect.";
+                    } else if (firstLoad) {
+                        window.location.href = "?new=true";
+                    } else {
+                        firstLoad = false;
+                        console.log("Trying again");
+                        setTimeout(refreshImage, 250);
+                    }
                     return;
                 }
               
@@ -293,22 +308,7 @@
                 }
             } catch (error) {
                 console.error('Fetch failed:', error);
-                const urlParams = new URLSearchParams(window.location.search);
-    
-                if (urlParams.get('id')) {
-                    firstLoad = false;
-                    feed.style.width = "80px";
-                    feed.style.height = "50px";
-                    feed.src = loadingGif;
-                    feed.style.opacity = "0.15";
-                    countryElement.textContent = "couldn't connect.";
-                } else if (firstLoad) {
-                    window.location.href = "?new=true";
-                } else {
-                    firstLoad = false;
-                    console.log("Trying again");
-                    setTimeout(refreshImage, 250);
-                }
+
             }
         }
     
