@@ -30,7 +30,7 @@ def encode_url(url):
     encoded_query_params = [(key, quote(value)) for key, value in query_params]
     encoded_query_string = urlencode(encoded_query_params)
     finished = urlunsplit((scheme, netloc, path, encoded_query_string, fragment))
-    print(finished)
+    print('ENCODED',finished)
     return finished
 
 def load_exception_urls():
@@ -150,7 +150,7 @@ def index():
         owner = 'unknown'
     return render_template('index.html', 
                                name=name, 
-                               url=proxy_url, 
+                               url=encode_url(proxy_url), 
                                info=info, 
                                country=country, 
                                time=time, 
