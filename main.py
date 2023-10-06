@@ -82,7 +82,11 @@ from urllib.parse import urlparse, parse_qs
 
 @app.route('/proxy/<path:url>')
 def proxy(url):
-    print("CHOSEN",url)
+    full_url = url
+    query_string = request.query_string.decode("utf-8")
+    if query_string:
+        full_url += "?" + query_string
+    print("CHOSEN",full_url)
 
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -95,7 +99,7 @@ def proxy(url):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
     }
 
-    clean_url = url.replace('proxy/', '')
+    clean_url = full_url.replace('proxy/', '')
     clean_url = encode_url(clean_url)
     
     try:
