@@ -332,9 +332,12 @@
                 feed.style.opacity = "0.15";
                 countryElement.textContent = "couldn't connect.";
             } 
-            else {
+            else if (firstLoad) {
                 window.location.href = "?new=true";
             } 
+            else {
+              refreshImage();
+            }
           };   
         
         img.src = newUrl;
