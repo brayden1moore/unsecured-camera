@@ -327,6 +327,7 @@
             
             const urlParams = new URLSearchParams(window.location.search);
             const countryElement = document.getElementById("country");
+            const id = this.getAttribute("data-id");
 
             if (urlParams.get('id')) {
                 feed.style.opacity = "0.15";
@@ -337,7 +338,7 @@
             } 
             else {
               console.log("error, refreshing");
-              refreshImage();
+              window.location.href = `?new=false&id=${id}`;
             }
           };   
         
