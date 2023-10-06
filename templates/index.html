@@ -283,19 +283,34 @@
       
         const newUrl = decodeURIComponent("{{ url|safe }}");
         
-        function refreshImage() {
-            let xhr = new XMLHttpRequest();
-            xhr.open('HEAD', newUrl + '?t=' + new Date().getTime(), true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        if (xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
-                            img.src = newUrl + '&t=' + new Date().getTime();
-                        }
-                    }
+        //function refreshImage() {
+        //    let xhr = new XMLHttpRequest();
+        //    xhr.open('HEAD', newUrl + '?t=' + new Date().getTime(), true);
+        //    xhr.onreadystatechange = function() {
+        //        if (xhr.readyState === 4) {
+        //            if (xhr.status === 200) {
+        //                if (xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
+        //                    img.src = newUrl + '&t=' + new Date().getTime();
+        //                }
+        //            }
+        //        }
+        //    };
+        //    xhr.send();
+        //}
+
+        async function refreshImage() {
+            const timestamp = new Date().getTime();
+            const fetchUrl = `${newUrl}?t=${timestamp}`;
+        
+            try {
+                const response = await fetch(fetchUrl, { method: 'HEAD' });
+        
+                if (response.ok && response.headers.get('Content-Type') === 'image/jpeg') {
+                    img.src = `${newUrl}&t=${timestamp}`;
                 }
-            };
-            xhr.send();
+            } catch (error) {
+                console.error('Fetch failed:', error);
+            }
         }
         
         const img = new Image();
