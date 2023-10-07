@@ -392,7 +392,7 @@
     document.querySelectorAll('hoverButton').forEach(button => {
       button.addEventListener('click', () => {
         controller.abort();
-        init();
+        window.location.replace('?new=true')
       });
     });
 
