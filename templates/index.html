@@ -266,138 +266,53 @@
     <script>
       
     // init
-
-      const feed = document.getElementById("feed");
-      const infoDiv = document.getElementById("info");
-      const infoText = document.getElementById("info-text");
-      const locationName = document.getElementById("location-name");
-      const countryElement = document.getElementById("country");
-      let firstLoad = true;
-      let isJpeg = false;
-      let isLoading = false;
-      let controller;
-  
-      const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
-      const newUrl = decodeURIComponent("{{ url|safe }}");
-      
-    // Handle feed load and refresh
-    document.addEventListener("DOMContentLoaded", function() {
-        
-        async function refreshImage() {
-            if(controller) {
-                controller.abort();
-            }
-            controller = new AbortController();
-            const signal = controller.signal;
-          
-            try {
-                const response = await fetch(newUrl, { method: 'HEAD' , signal: signal});
-                if (!response.ok) { 
-                    console.error(`Fetch failed with status: ${response.status}`);
-                
-                    const urlParams = new URLSearchParams(window.location.search);
-                    if (urlParams.get('id')) {
-                        feed.style.width = "80px";
-                        feed.style.height = "50px";
-                        feed.src = loadingGif;
-                        feed.style.opacity = "0.15";
-                        countryElement.textContent = "couldn't connect.";
-                    } else if (firstLoad) {
-                        window.location.href = "?new=true";
-                    } else {
-                        console.log("Trying again");
-                        setTimeout(refreshImage, 250);
-                    }
-                    return;
-                }
-              
-                const contentType = response.headers.get('Content-Type');
-                if (response.ok) {
-                    if (/image\/jpe?g/.test(contentType)) {
-                        feed.src = newUrl + '?t=' + new Date().getTime();
-                        isJpeg = true;
-                    } else {
-                        feed.src = newUrl;
-                        isJpeg = false;
-                    }
-                }
-              
-            } catch (error) {
-                console.error('Fetch failed:', error);
-
-            }
-        }
-    });
-
-      async function init() {
-        feed.style.width = "80px";
-        feed.style.height = "50px";
-        feed.src = loadingGif;
-        feed.style.opacity = "0.15";
-        infoText.style.opacity = "0";
-        locationName.textContent = "{{ page_title|safe }}";
-
-        await refreshImage();
-        
-        feed.onload = function() {
-            isLoading = false;
-            if (isJpeg) {
-              setTimeout(async () => {
-                  await refreshImage();
-              }, 250);
-            }
-          
-            if (firstLoad) {
-                countryElement.textContent = "connecting...";
-                infoDiv.style.opacity = "0";
-            }
-            firstLoad = false;
-
-            setTimeout(() => {
-                locationName.textContent = "{{ name|safe }}";
-                countryElement.textContent = "{{ country|safe }}";
-                feed.style.width = "100%";
-                feed.style.height = "70%";
-                feed.style.opacity = "1";
-                infoDiv.style.opacity = "1";
-            }, 100);
-
+    document.addEventListener("DOMContentLoaded", () => {
+        const feed = document.getElementById("feed");
+        const infoText = document.getElementById("info-text");
+        const country = document.getElementById("country");
+        const newUrl = "{{ url }}";
+        const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
+    
+        const setLoadingState = () => {
+            feed.style.width = "80px";
+            feed.style.height = "50px";
+            feed.src = loadingGif;
+            feed.style.opacity = "0.2";
+            infoText.style.opacity = "0";
+        };
+    
+        const setLoadedState = () => {
+            feed.src = `${newUrl}?t=${new Date().getTime()}`;
+            feed.style.width = "100%";
+            feed.style.height = "70%";
+            feed.style.opacity = "1";
             infoText.style.opacity = "1";
+            country.textContent = "{{ country }}";
         };
-
-        feed.onerror = function() {
-            console.error('Error loading feed', this.src);
-            const urlParams = new URLSearchParams(window.location.search);
-
-            if (urlParams.get('id')) {
-                firstLoad = false;
-                feed.style.width = "80px";
-                feed.style.height = "50px";
-                feed.src = loadingGif;
-                feed.style.opacity = "0.15";
-                countryElement.textContent = "couldn't connect.";
-            } else if (firstLoad) {
-                window.location.href = "?new=true";
-            } else {
-                firstLoad = false;
-                console.log("Trying again");
-                setTimeout(refreshImage, 500);
-            }
+    
+        const refreshImage = () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('HEAD', `${newUrl}?t=${new Date().getTime()}`, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4 && xhr.status === 200 && xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
+                    setLoadedState();
+                }
+            };
+            xhr.send();
         };
-    }
-    init();
-    console.log('Feed load initiated');
-
-    // Stop stream when click button
-    document.querySelectorAll('.abortButton').forEach(button => {
-      button.addEventListener('click', () => {
-        if (controller) {
-            console.log("Aborting");
-            controller.abort();
-            init();
-        }
-      });
+    
+        setLoadingState();
+        feed.onload = () => {
+            setLoadedState();
+            setTimeout(refreshImage, 1000);
+        };
+        feed.onerror = () => {
+            setLoadingState();
+            window.location.href = "?new=true";
+        };
+        feed.src = `${newUrl}?t=${new Date().getTime()}`;
     });
+
 
     // Time count
     document.addEventListener("DOMContentLoaded", function() {
