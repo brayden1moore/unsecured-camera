@@ -266,7 +266,7 @@
     <script>
 
     // Handle feed load and refresh
-
+    let controller;
     document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
         const infoDiv = document.getElementById("info");
@@ -279,8 +279,6 @@
     
         const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
         const newUrl = decodeURIComponent("{{ url|safe }}");
-    
-        let controller;
         
         async function refreshImage() {
             if(controller) {
