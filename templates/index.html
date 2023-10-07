@@ -264,7 +264,65 @@
 
 
     <script>
+      
+    // init
+      async function init() {
+            feed.style.width = "80px";
+            feed.style.height = "50px";
+            feed.src = loadingGif;
+            feed.style.opacity = "0.15";
+            infoText.style.opacity = "0";
+            locationName.textContent = "{{ page_title|safe }}";
+  
+            await refreshImage();
+            
+            feed.onload = function() {
+                isLoading = false;
+                if (isJpeg) {
+                  setTimeout(async () => {
+                      await refreshImage();
+                  }, 250);
+                }
+              
+                if (firstLoad) {
+                    countryElement.textContent = "connecting...";
+                    infoDiv.style.opacity = "0";
+                }
+                firstLoad = false;
+    
+                setTimeout(() => {
+                    locationName.textContent = "{{ name|safe }}";
+                    countryElement.textContent = "{{ country|safe }}";
+                    feed.style.width = "100%";
+                    feed.style.height = "70%";
+                    feed.style.opacity = "1";
+                    infoDiv.style.opacity = "1";
+                }, 100);
+    
+                infoText.style.opacity = "1";
+            };
 
+            feed.onerror = function() {
+                console.error('Error loading feed', this.src);
+                const urlParams = new URLSearchParams(window.location.search);
+    
+                if (urlParams.get('id')) {
+                    firstLoad = false;
+                    feed.style.width = "80px";
+                    feed.style.height = "50px";
+                    feed.src = loadingGif;
+                    feed.style.opacity = "0.15";
+                    countryElement.textContent = "couldn't connect.";
+                } else if (firstLoad) {
+                    window.location.href = "?new=true";
+                } else {
+                    firstLoad = false;
+                    console.log("Trying again");
+                    setTimeout(refreshImage, 500);
+                }
+            };
+      }
+      
     // Handle feed load and refresh
     let controller;
     document.addEventListener("DOMContentLoaded", function() {
@@ -323,65 +381,6 @@
                 console.error('Fetch failed:', error);
 
             }
-        }
-    
-        async function init() {
-            feed.style.width = "80px";
-            feed.style.height = "50px";
-            feed.src = loadingGif;
-            feed.style.opacity = "0.15";
-            infoText.style.opacity = "0";
-            locationName.textContent = "{{ page_title|safe }}";
-  
-            await refreshImage();
-            
-            feed.onload = function() {
-                isLoading = false;
-                if (isJpeg) {
-                  setTimeout(async () => {
-                      await refreshImage();
-                  }, 250);
-                }
-              
-                if (firstLoad) {
-                    countryElement.textContent = "connecting...";
-                    infoDiv.style.opacity = "0";
-                }
-                firstLoad = false;
-    
-                setTimeout(() => {
-                    locationName.textContent = "{{ name|safe }}";
-                    countryElement.textContent = "{{ country|safe }}";
-                    feed.style.width = "100%";
-                    feed.style.height = "70%";
-                    feed.style.opacity = "1";
-                    infoDiv.style.opacity = "1";
-                }, 100);
-    
-                infoText.style.opacity = "1";
-            };
-    
-            feed.onerror = function() {
-                console.error('Error loading feed', this.src);
-                const urlParams = new URLSearchParams(window.location.search);
-    
-                if (urlParams.get('id')) {
-                    firstLoad = false;
-                    feed.style.width = "80px";
-                    feed.style.height = "50px";
-                    feed.src = loadingGif;
-                    feed.style.opacity = "0.15";
-                    countryElement.textContent = "couldn't connect.";
-                } else if (firstLoad) {
-                    window.location.href = "?new=true";
-                } else {
-                    firstLoad = false;
-                    console.log("Trying again");
-                    setTimeout(refreshImage, 500);
-                }
-            };
-
-
         }
     
         init();
