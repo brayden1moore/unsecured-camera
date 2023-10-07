@@ -295,7 +295,7 @@
             xhr.open('HEAD', `${newUrl}?t=${new Date().getTime()}`, true);
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200 && xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
-                    setLoadedState();
+                    //setLoadedState();
                 }
             };
             xhr.send();
