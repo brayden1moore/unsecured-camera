@@ -283,20 +283,26 @@
         locationName.textContent = "{{ page_title|safe }}";
       
         const newUrl = "{{ url|safe }}";
-        
+
+        let contentTypeChecked = false;
+        let isJpeg = false;
         function refreshImage() {
-            let xhr = new XMLHttpRequest();
-            xhr.open('HEAD', newUrl, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
+            if (!isJpeg && !contentTypeChecked) {
+                let xhr = new XMLHttpRequest();
+                xhr.open('HEAD', newUrl, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
                         if (xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
                             img.src = newUrl + "?r=" + new Date().getTime();
+                            isJpeg = true;
+                            contentTypeChecked = true;
                         }
                     }
-                }
-            };
-            xhr.send();
+                };
+                xhr.send();
+            } else if (isJpeg && contentTypeChecked) {
+                img.src = newUrl + "?r=" + new Date().getTime();
+            }
         }
         
         const img = new Image();
