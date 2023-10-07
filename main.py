@@ -69,7 +69,7 @@ from urllib.parse import urlparse, parse_qs
 def proxy(url): 
     start_time = time.time() 
     
-    full_url = url
+    full_url = url.replace("COUNTER",str(random.randint(1,1000000)))
     query_string = request.query_string.decode("utf-8")
     if query_string:
         full_url += "?" + query_string
@@ -93,7 +93,7 @@ def proxy(url):
 
         end_time = time.time()  
         elapsed_time = end_time - start_time  
-        print(f"\nTime taken for proxy: {elapsed_time} seconds\n")
+        print(f"\n{clean_url}\nTime taken for proxy: {elapsed_time} seconds\n")
 
         return Response(req.iter_content(chunk_size=1024), content_type=req.headers['content-type'])
 
@@ -118,7 +118,7 @@ def index():
         session['current_feed'] = id
 
     url = encode_url(url)
-    url = url.replace('640x480','1280x960').replace("COUNTER",str(random.randint(1,1000000)))
+    url = url.replace('640x480','1280x960')
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_location(ip)
