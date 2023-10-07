@@ -321,11 +321,12 @@
             country.textContent = "{{ country }}"
         };
         
-        img.onerror = function() {
+        img.onerror = function(event) {
             feed.style.width = "80px";
             feed.style.height = "50px";
             feed.src = loadingGif;
             feed.style.opacity = "0.2";
+            console.log("Image loading failed:", event);
             
             const urlParams = new URLSearchParams(window.location.search);
             const countryElement = document.getElementById("country");
