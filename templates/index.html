@@ -278,6 +278,8 @@
         const infoDiv = document.getElementById("info");
         const infoText = document.getElementById("info-text");
         infoText.style.opacity = "0";
+
+        const countryElement = document.getElementById("country");
       
         const locationName = document.getElementById('location-name');
         locationName.textContent = "{{ page_title|safe }}";
@@ -294,6 +296,7 @@
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         if (xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
                             img.src = newUrl + "?r=" + new Date().getTime();
+                            countryElement.textContent = "connecting...";
                             isJpeg = true;
                             contentTypeChecked = true;
                         }
@@ -337,7 +340,6 @@
             console.log("Image loading failed:", event);
             
             const urlParams = new URLSearchParams(window.location.search);
-            const countryElement = document.getElementById("country");
             if (urlParams.get('new') === 'false') {
                 countryElement.textContent = "couldn't connect.";
             }
