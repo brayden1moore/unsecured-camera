@@ -389,7 +389,7 @@
     // Stop stream when click button
     document.querySelectorAll('hoverButton').forEach(button => {
       button.addEventListener('click', () => {
-        controller.abort();  
+        fetch('/abort_stream'); 
       });
     });
 
