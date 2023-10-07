@@ -333,6 +333,7 @@
             feed.src = loadingGif;
             feed.style.opacity = "0.2";
             infoText.style.opacity = "0";
+            locationName.textContent = "{{ page_title|safe }}";
             console.log("Image loading failed:", event);
             
             const urlParams = new URLSearchParams(window.location.search);
