@@ -281,21 +281,22 @@
             infoText.style.opacity = "0";
         };
     
-        const setLoadedState = () => {
-            feed.src = `${newUrl}?t=${new Date().getTime()}`;
+       const setLoadedState = (url) => {
+            feed.src = url;
             feed.style.width = "100%";
             feed.style.height = "70%";
             feed.style.opacity = "1";
             infoText.style.opacity = "1";
             country.textContent = "{{ country }}";
         };
-    
+        
         const refreshImage = () => {
             let xhr = new XMLHttpRequest();
-            xhr.open('HEAD', `${newUrl}?t=${new Date().getTime()}`, true);
+            const urlWithTimestamp = `${newUrl}?t=${new Date().getTime()}`;
+            xhr.open('HEAD', urlWithTimestamp, true);
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200 && xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
-                    setLoadedState();
+                    setLoadedState(urlWithTimestamp);
                 }
             };
             xhr.send();
