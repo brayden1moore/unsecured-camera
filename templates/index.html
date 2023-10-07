@@ -280,7 +280,7 @@
         infoText.style.opacity = "0";
       
         const locationName = document.getElementById('location-name');
-        locationName.textContent = "{{ page_title }}";
+        locationName.textContent = "{{ page_title|safe }}";
       
         const newUrl = "{{ url|safe }}";
         
@@ -308,7 +308,7 @@
             old = newUrl;
             setTimeout(() => {
               feed.src = this.src;
-              locationName.textContent = "{{ name }}";
+              locationName.textContent = "{{ name|safe }}";
               feed.style.width = "100%";
               feed.style.height = "70%";
               feed.style.opacity = "1";
