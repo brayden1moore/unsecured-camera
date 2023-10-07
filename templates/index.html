@@ -266,7 +266,7 @@
     <script>
       
     // init
-    document.addEventListener("DOMContentLoaded", () => {
+       document.addEventListener("DOMContentLoaded", () => {
         const feed = document.getElementById("feed");
         const infoText = document.getElementById("info-text");
         const country = document.getElementById("country");
@@ -281,22 +281,21 @@
             infoText.style.opacity = "0";
         };
     
-       const setLoadedState = (url) => {
-            feed.src = url;
+        const setLoadedState = () => {
+            feed.src = `${newUrl}?t=${new Date().getTime()}`;
             feed.style.width = "100%";
             feed.style.height = "70%";
             feed.style.opacity = "1";
             infoText.style.opacity = "1";
             country.textContent = "{{ country }}";
         };
-        
+    
         const refreshImage = () => {
             let xhr = new XMLHttpRequest();
-            const urlWithTimestamp = `${newUrl}?t=${new Date().getTime()}`;
-            xhr.open('HEAD', urlWithTimestamp, true);
+            xhr.open('HEAD', `${newUrl}?t=${new Date().getTime()}`, true);
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4 && xhr.status === 200 && xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
-                    setLoadedState(urlWithTimestamp);
+                    setLoadedState();
                 }
             };
             xhr.send();
