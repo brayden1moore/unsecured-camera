@@ -265,8 +265,6 @@
     <script>
 
     // Handle feed load and refresh
-    let controller = new AbortController();
-    let signal = controller.signal;
 
     document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
@@ -281,12 +279,14 @@
         const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
         const newUrl = decodeURIComponent("{{ url|safe }}");
     
+        let controller;
+        
         async function refreshImage() {
-            if (isLoading) return;
-            isLoading = true;
-            controller.abort();  
+            if(controller) {
+                controller.abort();
+            }
             controller = new AbortController();
-            signal = controller.signal;
+            const signal = controller.signal;
           
             try {
                 const response = await fetch(newUrl, { method: 'HEAD' , signal: signal});
@@ -392,7 +392,9 @@
     // Stop stream when click button
     document.querySelectorAll('.abortButton').forEach(button => {
       button.addEventListener('click', () => {
-        controller.abort();
+        if (controller) {
+            controller.abort();
+        }
       });
     });
 
