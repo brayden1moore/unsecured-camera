@@ -291,7 +291,7 @@
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         if (xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
-                            img.src = "proxy/" + newUrl + "?r=" + new Date().getTime();
+                            img.src = newUrl + "?r=" + new Date().getTime();
                         }
                     }
                 }
