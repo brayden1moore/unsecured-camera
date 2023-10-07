@@ -115,19 +115,16 @@ def proxy(url):
         
         logging.info(f"Sending request to: {clean_url}")
         req = requests.get(clean_url, headers=headers, stream=True, timeout=2)
-        logging.info(f"TIME: {time.time()-start}, Status Code: {req.status_code}, Response Headers: {req.headers}")
-
-        end_time = time.time()  
-        elapsed_time = end_time - start_time  
-        print(f"\nTime taken for proxy: {elapsed_time} seconds\n")
+        def generate():
+            for chunk in req.iter_content(chunk_size=1024):
+                if 'abort' in session and session['abort']:
+                    session['abort'] = False
+                    break
+                yield chunk
+                
+        return Response(generate(), content_type=req.headers['content-type'])
         
-        return Response(req.iter_content(chunk_size=1024), content_type=req.headers['content-type'])
-    
     except Exception as e:
-        #logging.error(f"Error in proxy: {str(e)}")
-        #print('Skipped')
-        #return redirect(url_for('index', new='true'))
-
         logging.error(f"Error in proxy: {str(e)}")
         return Response("Error", status=500)
 
@@ -187,6 +184,11 @@ def index():
                                Y=Y,
                                id=id,
                                page_title=page_title)
+
+@app.route('/abort_stream')
+def abort_stream():
+    session['abort'] = True
+    return 'Aborted', 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860')
