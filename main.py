@@ -163,10 +163,6 @@ def index():
                                id=id,
                                page_title=page_title)
 
-@app.route('/abort_stream')
-def abort_stream():
-    session['abort'] = True
-    return 'Aborted', 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='7860')
