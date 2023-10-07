@@ -89,7 +89,7 @@ def proxy(url):
     clean_url = encode_url(clean_url)
     
     try:
-        req = requests.get(clean_url, headers=headers, stream=True, timeout=2)
+        req = requests.get(clean_url, headers=headers, stream=True, timeout=1)
 
         end_time = time.time()  
         elapsed_time = end_time - start_time  
