@@ -305,7 +305,6 @@
     
         setLoadingState();
         feed.onload = () => {
-            setLoadedState();
             setTimeout(refreshImage, 1000);
         };
         feed.onerror = () => {
