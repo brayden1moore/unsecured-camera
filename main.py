@@ -109,21 +109,22 @@ def proxy(url):
 
     clean_url = full_url.replace('proxy/', '')
     clean_url = encode_url(clean_url)
+    should_abort = lambda: 'abort' in session and session['abort']
+
+    def generate(should_abort):
+        for chunk in req.iter_content(chunk_size=1024):
+            if should_abort():
+                break
+            yield chunk
     
     try:
         start = time.time()
-        
+
         logging.info(f"Sending request to: {clean_url}")
         req = requests.get(clean_url, headers=headers, stream=True, timeout=2)
-        def generate():
-            for chunk in req.iter_content(chunk_size=1024):
-                if 'abort' in session and session['abort']:
-                    session['abort'] = False
-                    break
-                yield chunk
-                
-        return Response(generate(), content_type=req.headers['content-type'])
-        
+
+        return Response(generate(should_abort), content_type=req.headers['content-type'])
+
     except Exception as e:
         logging.error(f"Error in proxy: {str(e)}")
         return Response("Error", status=500)
