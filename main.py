@@ -69,7 +69,7 @@ from urllib.parse import urlparse, parse_qs
 def proxy(url): 
     start_time = time.time() 
     
-    full_url = url.replace("COUNTER",str(random.randint(1,1000000)))
+    full_url = url
     query_string = request.query_string.decode("utf-8")
     if query_string:
         full_url += "?" + query_string
@@ -87,6 +87,7 @@ def proxy(url):
 
     clean_url = full_url.replace('proxy/', '')
     clean_url = encode_url(clean_url)
+    clean_url = clean_url.replace("COUNTER",str(random.randint(1,1000000)))
     
     try:
         req = requests.get(clean_url, headers=headers, stream=True, timeout=2)
