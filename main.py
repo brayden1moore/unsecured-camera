@@ -32,25 +32,7 @@ def encode_url(url):
     finished = urlunsplit((scheme, netloc, path, encoded_query_string, fragment))
     print('ENCODED',finished)
     return finished
-
-def load_exception_urls():
-    url = os.environ['EXCEPTIONS']
-    response = requests.get(url)
-    return pkl.loads(response.content)
-
-def save_exception_urls(exception_urls):
-    url = os.environ['EXCEPTIONS']
-    data = pkl.dumps(exception_urls)
-    requests.put(url, data=data)
     
-def get_ip_info(ip_address):
-    try:
-        response = requests.get(f"http://ipinfo.io/{ip_address}/json")
-        data = response.json()
-        return data
-    except Exception as e:
-        return {"error": str(e)}
-
 from geolite2 import geolite2
 def get_location(ip):
     start_time = time.time()  
