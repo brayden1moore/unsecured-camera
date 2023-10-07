@@ -214,13 +214,13 @@
                       <a href="{{ ip_link }}" target="_blank"> <h3 style="border-bottom: 2px solid yellow;" id="location-name">{{ page_title|safe }}</h3></a>
 
                       <div style="display: flex; margin-top: 22px; margin-bottom: 0%;">
-                        <a href="?new=true" style="margin-right: 10px; display: inline-block;">
-                          <button class="hoverButton" style="border-radius: 5px; border: 2px solid yellow; background-color: transparent; padding: 10px;">
+                        <a style="margin-right: 10px; display: inline-block;">
+                          <button class="hoverButton" onclick="window.location.href='?new=true'" style="border-radius: 5px; border: 2px solid yellow; background-color: transparent; padding: 10px;">
                             another
                           </button>
                         </a>
-                        <a href="?new=false&id={{ id }}" id="refreshSameFeedButton" style="display: inline-block;">
-                          <button class="hoverButton" style="border-radius: 5px; border: 2px solid rgb(53, 53, 53); background-color: transparent; padding: 10px;">
+                        <a id="refreshSameFeedButton" style="display: inline-block;">
+                          <button class="hoverButton" onclick="window.location.href='?new=false&id={{ id }}'" style="border-radius: 5px; border: 2px solid rgb(53, 53, 53); background-color: transparent; padding: 10px;">
                             refresh
                           </button>
                         </a>
