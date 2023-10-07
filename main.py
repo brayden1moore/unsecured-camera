@@ -10,8 +10,6 @@ import logging
 import os 
 import time
 
-logging.basicConfig(level=logging.INFO)
-
 app = Flask(__name__)
 app.secret_key = 'green-flounder'
 
@@ -30,7 +28,6 @@ def encode_url(url):
     encoded_query_params = [(key, quote(value)) for key, value in query_params]
     encoded_query_string = urlencode(encoded_query_params)
     finished = urlunsplit((scheme, netloc, path, encoded_query_string, fragment))
-    print('ENCODED',finished)
     return finished
     
 from geolite2 import geolite2
@@ -76,7 +73,6 @@ def proxy(url):
     query_string = request.query_string.decode("utf-8")
     if query_string:
         full_url += "?" + query_string
-    print("CHOSEN",full_url)
 
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -102,7 +98,6 @@ def proxy(url):
         return Response(req.iter_content(chunk_size=1024), content_type=req.headers['content-type'])
 
     except Exception as e:
-        logging.error(f"Error in proxy: {str(e)}")
         return Response("Error", status=500)
 
 
@@ -122,12 +117,10 @@ def index():
         feed = id
         session['current_feed'] = id
 
-    print("GENERATED", url)
     url = encode_url(url)
     url = url.replace('640x480','1280x960')
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
-    print('IP:',ip)
     info = get_location(ip)
     country = info['country'].lower()
     name = (info['city'] + ", " + info['region']).lower()
