@@ -286,7 +286,7 @@
             signal = controller.signal;
           
             try {
-                const response = await fetch(newUrl, { method: 'HEAD' });
+                const response = await fetch(newUrl, { method: 'HEAD' , signal: signal});
                 if (!response.ok) { 
                     console.error(`Fetch failed with status: ${response.status}`);
                 
