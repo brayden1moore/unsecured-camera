@@ -118,7 +118,7 @@ def index():
         session['current_feed'] = id
 
     url = encode_url(url)
-    url = url.replace('640x480','1280x960')
+    url = url.replace('640x480','1280x960').replace("COUNTER",str(random.randint(1,1000000)))
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_location(ip)
