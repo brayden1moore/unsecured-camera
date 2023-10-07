@@ -263,6 +263,9 @@
     <script>
 
     // Handle feed load and refresh
+    let controller = new AbortController();
+    let signal = controller.signal;
+
     document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
         const infoDiv = document.getElementById("info");
@@ -279,6 +282,9 @@
         async function refreshImage() {
             if (isLoading) return;
             isLoading = true;
+            controller = new AbortController();
+            signal = controller.signal;
+          
             try {
                 const response = await fetch(newUrl, { method: 'HEAD' });
                 if (!response.ok) { 
@@ -380,6 +386,11 @@
         console.log('Feed load initiated');
     });
 
+    // Stop stream when click button
+    document.querySelectorAll('hoverButton').forEach(button => {
+      button.addEventListener('click', () => {
+        controller.abort(); 
+          
 
     // Time count
     document.addEventListener("DOMContentLoaded", function() {
