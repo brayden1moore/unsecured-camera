@@ -98,6 +98,7 @@ def proxy(url):
         return Response(req.iter_content(chunk_size=1024), content_type=req.headers['content-type'])
 
     except Exception as e:
+        print(e)
         return Response("Error", status=500)
 
 
