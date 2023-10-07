@@ -215,12 +215,12 @@
 
                       <div style="display: flex; margin-top: 22px; margin-bottom: 0%;">
   
-                        <a href="?new=true" style="margin-right: 10px; display: inline-block;">
+                        <a class="abortButton" href="?new=true" style="margin-right: 10px; display: inline-block;">
                           <button class="hoverButton" style="border-radius: 5px; border: 2px solid yellow; background-color: transparent; padding: 10px;">
                             another
                           </button>
                         </a>
-                        <a href="?new=false&id={{ id }}" id="refreshSameFeedButton" style="display: inline-block;">
+                        <a  class="abortButton" href="?new=false&id={{ id }}" id="refreshSameFeedButton" style="display: inline-block;">
                           <button class="hoverButton" style="border-radius: 5px; border: 2px solid rgb(53, 53, 53); background-color: transparent; padding: 10px;">
                             refresh
                           </button>
@@ -390,7 +390,7 @@
     });
 
     // Stop stream when click button
-    document.querySelectorAll('.hoverButton').forEach(button => {
+    document.querySelectorAll('.abortButton').forEach(button => {
       button.addEventListener('click', () => {
         controller.abort();
       });
