@@ -266,6 +266,20 @@
     <script>
       
     // init
+
+      const feed = document.getElementById("feed");
+      const infoDiv = document.getElementById("info");
+      const infoText = document.getElementById("info-text");
+      const locationName = document.getElementById("location-name");
+      const countryElement = document.getElementById("country");
+      let firstLoad = true;
+      let isJpeg = false;
+      let isLoading = false;
+      let controller;
+  
+      const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
+      const newUrl = decodeURIComponent("{{ url|safe }}");
+      
       async function init() {
             feed.style.width = "80px";
             feed.style.height = "50px";
@@ -324,19 +338,7 @@
       }
       
     // Handle feed load and refresh
-    let controller;
     document.addEventListener("DOMContentLoaded", function() {
-        const feed = document.getElementById("feed");
-        const infoDiv = document.getElementById("info");
-        const infoText = document.getElementById("info-text");
-        const locationName = document.getElementById("location-name");
-        const countryElement = document.getElementById("country");
-        let firstLoad = true;
-        let isJpeg = false;
-        let isLoading = false;
-    
-        const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
-        const newUrl = decodeURIComponent("{{ url|safe }}");
         
         async function refreshImage() {
             if(controller) {
