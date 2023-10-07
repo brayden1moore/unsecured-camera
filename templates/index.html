@@ -389,7 +389,7 @@
     });
 
     // Stop stream when click button
-    document.querySelectorAll('hoverButton').forEach(button => {
+    document.querySelectorAll('a').forEach(button => {
       button.addEventListener('click', () => {
         controller.abort();
         window.location.replace('?new=true')
