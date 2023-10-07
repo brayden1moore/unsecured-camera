@@ -387,10 +387,11 @@
     });
 
     // Stop stream when click button
-    document.querySelectorAll('hoverButton').forEach(button => {
+    document.querySelectorAll('.stopStream').forEach(button => {
       button.addEventListener('click', () => {
-        controller.abort(); 
-          
+        controller.abort();  
+      });
+    });
 
     // Time count
     document.addEventListener("DOMContentLoaded", function() {
