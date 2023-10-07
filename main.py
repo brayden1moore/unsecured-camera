@@ -94,7 +94,6 @@ def proxy(url):
     
     try:
         req = requests.get(clean_url, headers=headers, stream=True, timeout=2)
-        logging.info(f"TIME: {time.time()-start}, Status Code: {req.status_code}, Response Headers: {req.headers}")
 
         end_time = time.time()  
         elapsed_time = end_time - start_time  
