@@ -265,54 +265,78 @@
 
     <script>
       
-    // init
-       document.addEventListener("DOMContentLoaded", () => {
+     // Handle feed load and refresh
+    let loadingGif = "{{ url_for('static', filename='eye.gif') }}";
+    let currentFeed;
+    let firstLoad = true;
+    document.addEventListener("DOMContentLoaded", function() {
         const feed = document.getElementById("feed");
+        feed.style.width = "80px";
+        feed.style.height = "50px";
+        feed.src = loadingGif;
+        feed.style.opacity = "0.2";
+        const infoDiv = document.getElementById("info");
         const infoText = document.getElementById("info-text");
-        const country = document.getElementById("country");
-        const newUrl = "{{ url }}";
-        const loadingGif = "{{ url_for('static', filename='eye.gif') }}";
-    
-        const setLoadingState = () => {
-            feed.style.width = "80px";
-            feed.style.height = "50px";
-            feed.src = loadingGif;
-            feed.style.opacity = "0.2";
-            infoText.style.opacity = "0";
-        };
-    
-        const setLoadedState = () => {
-            feed.src = `${newUrl}?t=${new Date().getTime()}`;
-            feed.style.width = "100%";
-            feed.style.height = "70%";
-            feed.style.opacity = "1";
-            infoText.style.opacity = "1";
-            country.textContent = "{{ country }}";
-        };
-    
-        const refreshImage = () => {
+        infoText.style.opacity = "0";
+      
+        const locationName = document.getElementById('location-name');
+        locationName.textContent = "{{ page_title }}";
+      
+        const newUrl = "{{ url|safe }}";
+        
+        function refreshImage() {
             let xhr = new XMLHttpRequest();
-            xhr.open('HEAD', `${newUrl}?t=${new Date().getTime()}`, true);
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState === 4 && xhr.status === 200 && xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
-                      setTimeout(() => {
-                        setLoadedState();
-                      }, 100);
+            xhr.open('HEAD', newUrl, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        if (xhr.getResponseHeader('Content-Type') === 'image/jpeg') {
+                            img.src = newUrl;
+                        }
+                    }
                 }
             };
             xhr.send();
-        };
-    
-        setLoadingState();
-        feed.onload = () => {
-            setLoadedState();
+        }
+        
+        const img = new Image();
+        img.onload = function() {
+            if (firstLoad) {
+              infoDiv.style.opacity = "0";
+            }
+            firstLoad = false;
+            old = newUrl;
+            setTimeout(() => {
+              feed.src = this.src;
+              locationName.textContent = "{{ name }}";
+              feed.style.width = "100%";
+              feed.style.height = "70%";
+              feed.style.opacity = "1";
+              infoDiv.style.opacity = "1";
+            }, 100);
+            const infoText = document.getElementById("info-text");
+            infoText.style.opacity = "1";
+          
             setTimeout(refreshImage, 1000);
+            country.textContent = "{{ country }}"
         };
-        feed.onerror = () => {
-            setLoadingState();
-            window.location.href = "?new=true";
+        
+        img.onerror = function() {
+            feed.style.width = "80px";
+            feed.style.height = "50px";
+            feed.src = loadingGif;
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const countryElement = document.getElementById("country");
+            if (urlParams.get('new') === 'false') {
+                countryElement.textContent = "couldn't connect.";
+            }
+            else {
+                window.location.href = "?new=true";
+            }
         };
-        feed.src = newUrl;
+        
+        img.src = newUrl;
     });
 
 
