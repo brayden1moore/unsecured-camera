@@ -87,7 +87,6 @@ def proxy(url):
 
     clean_url = full_url.replace('proxy/', '')
     clean_url = encode_url(clean_url)
-    clean_url = clean_url.replace("COUNTER",str(random.randint(1,1000000)))
     
     try:
         req = requests.get(clean_url, headers=headers, stream=True, timeout=2)
@@ -119,7 +118,8 @@ def index():
         session['current_feed'] = id
 
     url = encode_url(url)
-    url = url.replace('640x480','1280x960')
+    url = url.replace('640x480','1280x960').replace('COUNTER','')
+    
     id = feed
     ip = ''.join(url.split('//')[-1]).split(':')[0]
     info = get_location(ip)
