@@ -169,7 +169,7 @@ document.addEventListener("fullscreenchange", function() {
 // Change feed on space bar press
 document.addEventListener('keydown', function(event) {
     if (event.keyCode === 32) { 
-    window.location.href = '/?new=true';
+    window.location.href = '?new=true';
     }
 });
 
