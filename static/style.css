@@ -6,6 +6,11 @@ body {
     height: 100vh;
     margin: auto;
 }
+
+button {
+    cursor: pointer;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
     border-radius: 5px;
