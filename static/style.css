@@ -139,6 +139,7 @@ a {
 }
 
 #share {
+    cursor: pointer;
     margin: auto;
     margin-left: 10px;
     color: yellow;
