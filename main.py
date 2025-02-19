@@ -40,7 +40,6 @@ def get_location(ip):
     end_time = time.time()  
 
     elapsed_time = end_time - start_time
-    print(f"\nTime taken for get_location: {elapsed_time} seconds\n")
 
     if location:
         return {'country': location['country']['names']['en'] if 'country' in location else 'unknown country',
@@ -94,7 +93,6 @@ def proxy(url):
 
         end_time = time.time()  
         elapsed_time = end_time - start_time  
-        print(f"\n{clean_url}\nTime taken for proxy: {elapsed_time} seconds\n")
 
         return Response(req.iter_content(chunk_size=1024), content_type=req.headers['content-type'])
 
